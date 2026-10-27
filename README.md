@@ -53,6 +53,7 @@ curl -fsSL https://raw.githubusercontent.com/Jyavaz68/TeperTemplate/main/install
 | Logo image URL | لینک `https` تصویر لوگو (PNG/SVG/WebP). با `-` لوگوی پیش‌فرض (سپر با نام برند گرادیانی) استفاده می‌شود |
 | Support link | `@آیدی_تلگرام` یا لینک `https`. اگر خالی بماند (`-`)، در بخش راهنما نوشته می‌شود «به کسی که کانفیگ را از او خریده‌اید پیام بدهید» |
 | Accent color | Indigo، Emerald، Rose، Amber، Sky یا نام‌های دیگر (violet، fuchsia، pink، red، orange، lime، teal، cyan، blue) یا هر رنگ هگز مثل `#ff5a5f` |
+| Page background | منوی شماره‌دار: Midnight، Violet، Wine، Forest، Ocean، Graphite، Coffee، Black و روشن‌ها (Snow، Cream، Mint، …) یا هر رنگ هگز. `0` = پیش‌فرض پوسته. کاربر بعداً می‌تواند از دکمه‌ی پالت عوضش کند |
 | Language / Theme | زبان و پوسته‌ی پیش‌فرض |
 
 نصب‌کننده خودش `CUSTOM_TEMPLATES_DIRECTORY` و `SUBSCRIPTION_PAGE_TEMPLATE` را در `/opt/pasarguard/.env` تنظیم می‌کند، از قالب قبلی شما پشتیبان می‌گیرد و پاسارگاد را ریستارت می‌کند. بعد از نصب دستور **`teper`** هم ساخته می‌شود.
@@ -73,7 +74,7 @@ teper update
 sudo bash install.sh install --yes \
   --name "My Brand" --subtitle-fa "پنل اشتراک" --subtitle-en "Subscription" \
   --logo https://example.com/logo.png --support @my_support \
-  --accent emerald --lang fa --theme dark
+  --accent emerald --bg '#0a1128' --lang fa --theme dark
 ```
 
 همه‌ی گزینه‌ها: `bash install.sh --help`

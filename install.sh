@@ -29,8 +29,8 @@ RAW_BASE="https://raw.githubusercontent.com/$GH_USER/$REPO_NAME/$BRANCH"
 
 # ---- options ----------------------------------------------------------------
 ACTION=""; YES=0; FORCE=0; USE_REMOTE=0; NO_RESTART="${TEPER_NO_RESTART:-0}"
-OPT_NAME=""; OPT_SUB_FA=""; OPT_SUB_EN=""; OPT_LOGO=""; OPT_SUPPORT=""; OPT_ACCENT=""; OPT_LANG=""; OPT_THEME=""
-HAVE_NAME=0; HAVE_SUB_FA=0; HAVE_SUB_EN=0; HAVE_LOGO=0; HAVE_SUPPORT=0; HAVE_ACCENT=0; HAVE_LANG=0; HAVE_THEME=0
+OPT_NAME=""; OPT_SUB_FA=""; OPT_SUB_EN=""; OPT_LOGO=""; OPT_SUPPORT=""; OPT_ACCENT=""; OPT_BG=""; OPT_LANG=""; OPT_THEME=""
+HAVE_NAME=0; HAVE_SUB_FA=0; HAVE_SUB_EN=0; HAVE_LOGO=0; HAVE_SUPPORT=0; HAVE_ACCENT=0; HAVE_BG=0; HAVE_LANG=0; HAVE_THEME=0
 
 # ---- ui ---------------------------------------------------------------------
 if [[ -t 1 && -z "${NO_COLOR:-}" ]]; then
@@ -118,7 +118,7 @@ installed_version() { [[ -f "$STATE_FILE" ]] && STATE="$STATE_FILE" python3 -c '
 py_cfg() { # prints merged config JSON: defaults < saved state < CLI/answers (env TEPER_ANS)
   python3 - "$@" <<'PY'
 import json, os, re, sys
-d = {"name":"Teper","subtitle":{"fa":"پنل اشتراک","en":"Subscription panel"},"logoUrl":"","supportUrl":"","accent":"indigo","lang":"fa","theme":"dark","credit":True}
+d = {"name":"Teper","subtitle":{"fa":"پنل اشتراک","en":"Subscription panel"},"logoUrl":"","supportUrl":"","accent":"indigo","bg":"","lang":"fa","theme":"dark","credit":True}
 st = os.environ.get("STATE","")
 if st and os.path.isfile(st):
     try:
@@ -137,6 +137,7 @@ d["logoUrl"] = clean(d["logoUrl"], 500)
 d["supportUrl"] = clean(d["supportUrl"], 500)
 ACC = ("indigo","violet","fuchsia","pink","rose","red","orange","amber","lime","emerald","teal","cyan","sky","blue")
 if not (d["accent"] in ACC or re.fullmatch(r"#[0-9a-fA-F]{6}", str(d["accent"]))): d["accent"] = "indigo"
+if not re.fullmatch(r"#[0-9a-fA-F]{6}", str(d.get("bg",""))): d["bg"] = ""
 if d["lang"] not in ("fa","en"): d["lang"] = "fa"
 if d["theme"] not in ("dark","light","auto"): d["theme"] = "dark"
 print(json.dumps(d, ensure_ascii=False))
@@ -207,33 +208,66 @@ check_logo() {
     confirm "Use it anyway?" n || { echo "INVALID"; return; }; fi
   echo "$u"
 }
+ACC_NAMES=(indigo emerald rose amber sky violet fuchsia pink red orange lime teal cyan blue)
+ACC_HEX=(7c8cff 34d399 fb7185 fbbf24 38bdf8 a78bfa d946ef f472b6 f87171 fb923c a3e635 2dd4bf 22d3ee 60a5fa)
+BG_NAMES=(Default Midnight Violet Wine Forest Ocean Graphite Coffee Black Snow Cream Mint Lavender Blush Sky)
+BG_HEX=("" 0a1128 150b2b 2a0b18 08180f 061b1f 131316 1d130b 000000 ffffff fbf3e4 e6f7ef efe9fb fdeaee e4f1fc)
+swatch() { local h="${1:-070a12}"; printf '\033[48;2;%d;%d;%dm    \033[0m' "$((16#${h:0:2}))" "$((16#${h:2:2}))" "$((16#${h:4:2}))"; }
+is_hex() { [[ "$1" =~ ^#[0-9A-Fa-f]{6}$ ]]; }
 pick_accent() {
-  local cur="${1:-indigo}" a
-  say "Accent color:" >&2
-  printf '    %s1%s \033[48;5;105m  \033[0m Indigo   %s2%s \033[48;5;79m  \033[0m Emerald   %s3%s \033[48;5;204m  \033[0m Rose\n' "$B" "$R" "$B" "$R" "$B" "$R" >&2
-  printf '    %s4%s \033[48;5;214m  \033[0m Amber    %s5%s \033[48;5;75m  \033[0m Sky\n' "$B" "$R" "$B" "$R" >&2
-  say "  ${D}or type: violet fuchsia pink red orange lime teal cyan blue, or a hex like #ff5a5f${R}" >&2
-  local def=1; case "$cur" in indigo) def=1;; emerald) def=2;; rose) def=3;; amber) def=4;; sky) def=5;; *) def="$cur";; esac
-  ask a "Choose 1-5 / name / #hex" "$def"
-  case "$a" in
-    1|indigo) echo indigo;; 2|emerald) echo emerald;; 3|rose) echo rose;; 4|amber) echo amber;; 5|sky) echo sky;;
-    violet|fuchsia|pink|red|orange|lime|teal|cyan|blue) echo "$a";;
-    *) if [[ "$a" =~ ^#[0-9A-Fa-f]{6}$ ]]; then echo "$a"; else echo indigo; fi;;
-  esac
+  local cur="${1:-indigo}" a i nm def=1 n=${#ACC_NAMES[@]}
+  say "Button / accent color:" >&2
+  for ((i=0; i<n; i++)); do
+    printf '    %s%2d%s %s %-9s' "$B" "$((i+1))" "$R" "$(swatch "${ACC_HEX[i]}")" "${ACC_NAMES[i]}" >&2
+    (( (i+1) % 3 == 0 )) && printf '\n' >&2
+  done
+  (( n % 3 )) && printf '\n' >&2
+  printf '    %s%2d%s custom color  %s(#rrggbb, e.g. #ff5a5f)%s\n' "$B" "$((n+1))" "$R" "$D" "$R" >&2
+  for ((i=0; i<n; i++)); do [[ "${ACC_NAMES[i]}" == "$cur" ]] && def=$((i+1)); done
+  is_hex "$cur" && def="$cur"
+  ask a "Choose 1-$((n+1)) or type #hex" "$def"
+  if [[ "$a" =~ ^[0-9]+$ ]]; then
+    if (( a >= 1 && a <= n )); then echo "${ACC_NAMES[a-1]}"; return; fi
+    if (( a == n+1 )); then ask a "Custom color (#rrggbb)" "#7c8cff"; is_hex "$a" && echo "$a" || echo indigo; return; fi
+  fi
+  is_hex "$a" && { echo "$a"; return; }
+  for nm in "${ACC_NAMES[@]}"; do [[ "$a" == "$nm" ]] && { echo "$nm"; return; }; done
+  echo indigo
+}
+pick_bg() {
+  local cur="${1:-}" a i def=0 n=${#BG_NAMES[@]}
+  say "Page background color:" >&2
+  for ((i=0; i<n; i++)); do
+    printf '    %s%2d%s %s %-9s' "$B" "$i" "$R" "$(swatch "${BG_HEX[i]}")" "${BG_NAMES[i]}" >&2
+    (( (i+1) % 3 == 0 )) && printf '\n' >&2
+  done
+  (( n % 3 )) && printf '\n' >&2
+  printf '    %s%2d%s custom color  %s(#rrggbb)   %s0 = default of the chosen theme%s\n' "$B" "$n" "$R" "$D" "$D" "$R" >&2
+  for ((i=1; i<n; i++)); do [[ "#${BG_HEX[i]}" == "$cur" ]] && def=$i; done
+  is_hex "$cur" && (( def == 0 )) && def="$cur"
+  ask a "Choose 0-$n or type #hex" "$def"
+  if [[ "$a" =~ ^[0-9]+$ ]]; then
+    if (( a >= 1 && a < n )); then echo "#${BG_HEX[a]}"; return; fi
+    if (( a == 0 )); then echo ""; return; fi
+    if (( a == n )); then ask a "Custom color (#rrggbb)" "#0a1128"; is_hex "$a" && echo "$a" || echo ""; return; fi
+  fi
+  is_hex "$a" && { echo "$a"; return; }
+  echo ""
 }
 collect_config() { # fills ANS_JSON using saved values as defaults
   local cur; cur="$(STATE="$STATE_FILE" TEPER_ANS="{}" py_cfg)"
   getc() { CUR="$cur" python3 -c 'import json,os,sys;d=json.loads(os.environ["CUR"]);k=sys.argv[1].split(".");
 for x in k: d=d[x]
 print(d)' "$1"; }
-  local name sfa sen logo support accent lang theme v
-  name="$(getc name)"; sfa="$(getc subtitle.fa)"; sen="$(getc subtitle.en)"; logo="$(getc logoUrl)"; support="$(getc supportUrl)"; accent="$(getc accent)"; lang="$(getc lang)"; theme="$(getc theme)"
+  local name sfa sen logo support accent bg lang theme v
+  name="$(getc name)"; sfa="$(getc subtitle.fa)"; sen="$(getc subtitle.en)"; logo="$(getc logoUrl)"; support="$(getc supportUrl)"; accent="$(getc accent)"; bg="$(getc bg)"; lang="$(getc lang)"; theme="$(getc theme)"
   (( HAVE_NAME ))    && name="$OPT_NAME"
   (( HAVE_SUB_FA ))  && sfa="$OPT_SUB_FA"
   (( HAVE_SUB_EN ))  && sen="$OPT_SUB_EN"
   (( HAVE_LOGO ))    && logo="$OPT_LOGO"
   (( HAVE_SUPPORT )) && support="$OPT_SUPPORT"
   (( HAVE_ACCENT ))  && accent="$OPT_ACCENT"
+  (( HAVE_BG ))      && bg="$OPT_BG"
   (( HAVE_LANG ))    && lang="$OPT_LANG"
   (( HAVE_THEME ))   && theme="$OPT_THEME"
 
@@ -251,6 +285,7 @@ print(d)' "$1"; }
         v="$(norm_support "$v")"; [[ "$v" == INVALID ]] || { support="$v"; break; }; warn "Use @username, t.me/…, or an https:// link."; done
     fi
     (( HAVE_ACCENT )) || accent="$(pick_accent "$accent")"
+    (( HAVE_BG )) || bg="$(pick_bg "$bg")"
     (( HAVE_LANG )) || { ask lang "Default language (fa/en)" "$lang"; }
     (( HAVE_THEME )) || { ask theme "Default theme (dark/light/auto)" "$theme"; }
   else
@@ -258,9 +293,11 @@ print(d)' "$1"; }
     [[ "$logo" =~ ^(-|none)$ ]] && logo=""
     [[ -z "$logo" || "$logo" =~ ^https:// ]] || die "--logo must be an https:// URL."
   fi
-  ANS_JSON="$(N="$name" A="$sfa" E="$sen" L="$logo" S="$support" C="$accent" G="$lang" T="$theme" python3 -c '
+  [[ "$bg" =~ ^(-|none|default)$ ]] && bg=""
+  [[ -z "$bg" ]] || is_hex "$bg" || die "--bg must be #rrggbb (or - for the theme default)."
+  ANS_JSON="$(N="$name" A="$sfa" E="$sen" L="$logo" S="$support" C="$accent" B="$bg" G="$lang" T="$theme" python3 -c '
 import json,os;e=os.environ
-print(json.dumps({"name":e["N"],"subtitle":{"fa":e["A"],"en":e["E"]},"logoUrl":e["L"],"supportUrl":e["S"],"accent":e["C"],"lang":e["G"],"theme":e["T"]}, ensure_ascii=False))')"
+print(json.dumps({"name":e["N"],"subtitle":{"fa":e["A"],"en":e["E"]},"logoUrl":e["L"],"supportUrl":e["S"],"accent":e["C"],"bg":e["B"],"lang":e["G"],"theme":e["T"]}, ensure_ascii=False))')"
 }
 
 # ---- core -------------------------------------------------------------------
@@ -317,7 +354,7 @@ summary() { # summary CONFIG_JSON
 import json, os
 c = json.loads(os.environ["CUR"])
 rows = [("Brand", c["name"]), ("Tagline", c["subtitle"]["fa"] + "  /  " + c["subtitle"]["en"]), ("Logo", c["logoUrl"] or "(default shield logo)"),
-        ("Support", c["supportUrl"] or "(none)"), ("Accent", c["accent"]), ("Language", c["lang"]), ("Theme", c["theme"])]
+        ("Support", c["supportUrl"] or "(none)"), ("Accent", c["accent"]), ("Background", c.get("bg") or "(default for theme)"), ("Language", c["lang"]), ("Theme", c["theme"])]
 for k, v in rows: print(f"    {k:<9} {v}")
 PY
 }
@@ -425,6 +462,7 @@ Options
   --logo URL              https image URL ('-' = default shield logo)
   --support LINK          @telegram_id, t.me/..., https://...
   --accent NAME|#HEX      indigo emerald rose amber sky violet fuchsia pink red orange lime teal cyan blue, or #rrggbb
+  --bg #HEX               page background color ('-' = default of the theme)
   --lang fa|en            default language         --theme dark|light|auto
   --force                 reinstall even if the version is the same
   --remote                ignore a local index.html and download from GitHub
@@ -445,6 +483,7 @@ while [[ $# -gt 0 ]]; do
     --logo) OPT_LOGO="${2:?}"; HAVE_LOGO=1; shift;;
     --support) OPT_SUPPORT="${2:?}"; HAVE_SUPPORT=1; shift;;
     --accent) OPT_ACCENT="${2:?}"; HAVE_ACCENT=1; shift;;
+    --bg) OPT_BG="${2:?}"; HAVE_BG=1; shift;;
     --lang) OPT_LANG="${2:?}"; HAVE_LANG=1; shift;;
     --theme) OPT_THEME="${2:?}"; HAVE_THEME=1; shift;;
     --branch) BRANCH="${2:?}"; RAW_BASE="https://raw.githubusercontent.com/$GH_USER/$REPO_NAME/$BRANCH"; shift;;

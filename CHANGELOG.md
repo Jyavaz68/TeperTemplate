@@ -3,7 +3,7 @@
 - New "Customize colors" sheet (palette button): 14 accent presets + two custom pickers for the button gradient, and 16 background presets (dark and light) + a custom background picker. Saved on the user's device only; text and surfaces adapt automatically to light or dark backgrounds
 - Support: if no support ID/link is configured, the Help tab tells the user to message the person they bought the config from; if one is set, the button opens that ID and the ID is shown
 - Stronger liquid-glass look: animated color orbs behind the page, thicker blur, gradient glass borders, glossy buttons, glass sheets and dock
-- Installer accepts the new accent names and any `#rrggbb` color
+- Installer: numbered color menus in the terminal for the button/accent color (14 presets + custom hex) and the page background (15 presets + custom hex); new `--bg` flag. The admin's choice is the default; users can still change it from the palette button
 
 ## v1.1.0
 - Default logo is now the shield icon with an animated gradient brand name (used when no logo URL is set)
