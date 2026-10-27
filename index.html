@@ -17,23 +17,24 @@
   --r-xl:26px;--r-lg:20px;--r-md:14px;--r-sm:10px;
   --dock-h:68px;--on-a:#0a0f1e;
   --a1:#7c8cff;--a2:#b388ff;--a-rgb:124,140,255;--a-ink:#9aa6ff;
+  --b1:#38bdf8;--b2:#a78bfa;--b3:#f472b6;
 }
-html[data-accent=emerald]{--a1:#34d399;--a2:#22d3ee;--a-rgb:52,211,153;--a-ink:#5eead4}
-html[data-accent=rose]{--a1:#fb7185;--a2:#f472b6;--a-rgb:251,113,133;--a-ink:#fda4af}
-html[data-accent=amber]{--a1:#fbbf24;--a2:#fb923c;--a-rgb:251,191,36;--a-ink:#fcd34d}
-html[data-accent=sky]{--a1:#38bdf8;--a2:#818cf8;--a-rgb:56,189,248;--a-ink:#7dd3fc}
+html[data-accent=emerald]{--a1:#34d399;--a2:#22d3ee;--a-rgb:52,211,153;--a-ink:#5eead4;--b1:var(--a1);--b2:var(--a2);--b3:var(--a1)}
+html[data-accent=rose]{--a1:#fb7185;--a2:#f472b6;--a-rgb:251,113,133;--a-ink:#fda4af;--b1:var(--a1);--b2:var(--a2);--b3:var(--a1)}
+html[data-accent=amber]{--a1:#fbbf24;--a2:#fb923c;--a-rgb:251,191,36;--a-ink:#fcd34d;--b1:var(--a1);--b2:var(--a2);--b3:var(--a1)}
+html[data-accent=sky]{--a1:#38bdf8;--a2:#818cf8;--a-rgb:56,189,248;--a-ink:#7dd3fc;--b1:var(--a1);--b2:var(--a2);--b3:var(--a1)}
 html[data-theme=dark]{
   color-scheme:dark;
   --bg:#070a12;--bg2:#0b1020;--card:rgba(18,24,42,.62);--card-solid:#10172a;--card-2:rgba(255,255,255,.045);
   --line:rgba(255,255,255,.09);--line-2:rgba(255,255,255,.17);--tx:#eef1f8;--tx2:rgba(226,232,246,.7);--tx3:rgba(226,232,246,.46);
-  --shadow:0 18px 50px rgba(0,0,0,.42);--track:rgba(255,255,255,.08);--field:rgba(255,255,255,.055);--glow:.34;--nav-bg:rgba(14,20,38,.78);
+  --shadow:0 18px 50px rgba(0,0,0,.42);--track:rgba(255,255,255,.08);--field:rgba(255,255,255,.055);--glow:.34;--nav-bg:rgba(14,20,38,.78);--gloss:rgba(255,255,255,.055);--shine:.075;
   --ok:#34d399;--ok-rgb:52,211,153;--warn:#fbbf24;--warn-rgb:251,191,36;--bad:#f87171;--bad-rgb:248,113,113;
 }
 html[data-theme=light]{
   color-scheme:light;
   --bg:#eef2fb;--bg2:#e4eaf7;--card:rgba(255,255,255,.74);--card-solid:#fff;--card-2:rgba(20,30,60,.04);
   --line:rgba(20,30,60,.09);--line-2:rgba(20,30,60,.17);--tx:#0f1830;--tx2:rgba(15,24,48,.7);--tx3:rgba(15,24,48,.5);
-  --shadow:0 14px 40px rgba(40,60,120,.13);--track:rgba(20,30,60,.09);--field:rgba(20,30,60,.05);--glow:.22;--nav-bg:rgba(255,255,255,.82);
+  --shadow:0 14px 40px rgba(40,60,120,.13);--track:rgba(20,30,60,.09);--field:rgba(20,30,60,.05);--glow:.22;--nav-bg:rgba(255,255,255,.82);--gloss:rgba(255,255,255,.55);--shine:.5;
   --ok:#047857;--ok-rgb:4,120,87;--warn:#b45309;--warn-rgb:180,83,9;--bad:#b91c1c;--bad-rgb:185,28,28;
 }
 html[data-theme=light][data-accent=indigo]{--a-ink:#4a58d6}
@@ -64,14 +65,15 @@ a{color:inherit}
 
 /* brand */
 .brand{display:flex;align-items:center;gap:11px;min-width:0}
-.logo{width:42px;height:42px;border-radius:14px;flex:none;display:grid;place-items:center;overflow:hidden;position:relative;
-  background:linear-gradient(135deg,var(--a1),var(--a2));color:var(--on-a);font-weight:800;font-size:19px;
-  box-shadow:0 8px 24px rgba(var(--a-rgb),.38),inset 0 1px 0 rgba(255,255,255,.4)}
+.logo{width:42px;height:42px;border-radius:14px;flex:none;display:grid;place-items:center;overflow:hidden;position:relative}
 .logo img{display:none;width:100%;height:100%;object-fit:contain;padding:4px}
+.logo .shield{width:34px;height:34px;filter:drop-shadow(0 4px 12px rgba(var(--a-rgb),.5))}
 .logo.has-img{background:var(--card-2);border:1px solid var(--line);box-shadow:none}
-.logo.has-img img{display:block}.logo.has-img .mono{display:none}
+.logo.has-img img{display:block}.logo.has-img .shield{display:none}
 .brand-txt{display:flex;flex-direction:column;min-width:0;line-height:1.3}
-.brand-txt strong{font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.2px}
+.brand-txt strong{font-size:16px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.2px;padding:2px 0;
+  background:linear-gradient(135deg,var(--b1),var(--b2),var(--b3));background-size:200% 200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:brandMove 4s ease-in-out infinite}
+@keyframes brandMove{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 .brand-txt small{font-size:11.5px;color:var(--tx3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* top bar */
@@ -83,9 +85,15 @@ a{color:inherit}
 .iconbtn.txt{width:auto;padding:0 13px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;white-space:nowrap}
 
 /* ---------- cards ---------- */
-.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:18px;box-shadow:var(--shadow)}
+.card{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--gloss),transparent 42%),var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:18px;box-shadow:var(--shadow)}
 .card::before{content:"";position:absolute;left:22px;right:22px;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);opacity:.7;pointer-events:none}
 html[data-theme=light] .card::before{opacity:1}
+.card::after{content:"";position:absolute;top:-50%;left:-60%;width:60%;height:200%;pointer-events:none;z-index:0;transform:rotate(18deg);
+  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,0) 30%,rgba(255,255,255,var(--shine)) 50%,rgba(255,255,255,0) 70%,transparent 100%);
+  animation:shinePass 9s ease-in-out infinite}
+.card:nth-of-type(2n)::after{animation-delay:-3s}.card:nth-of-type(3n)::after{animation-delay:-5.5s}.card:nth-of-type(5n)::after{animation-delay:-7.2s}
+.card>*{position:relative;z-index:1}
+@keyframes shinePass{0%{left:-60%;opacity:0}15%{opacity:.9}50%{left:120%;opacity:.9}51%{opacity:0}100%{left:-60%;opacity:0}}
 @supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
   .card,.nav,.iconbtn{-webkit-backdrop-filter:blur(22px) saturate(1.4);backdrop-filter:blur(22px) saturate(1.4)}
 }
@@ -103,10 +111,25 @@ html[data-theme=light] .card::before{opacity:1}
 
 /* ---------- hero ---------- */
 .hero{overflow:hidden;display:flex;flex-direction:column;gap:18px}
-.hero::after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;inset-inline-end:-90px;top:-130px;background:radial-gradient(circle,rgba(var(--a-rgb),.3),transparent 66%);pointer-events:none}
+.hero{background:radial-gradient(320px 300px at 100% -20%,rgba(var(--a-rgb),.3),transparent 66%),linear-gradient(180deg,var(--gloss),transparent 42%),var(--card)}
+html[dir=rtl] .hero{background:radial-gradient(320px 300px at 0% -20%,rgba(var(--a-rgb),.3),transparent 66%),linear-gradient(180deg,var(--gloss),transparent 42%),var(--card)}
 .who{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
-.avatar{width:56px;height:56px;border-radius:19px;flex:none;display:grid;place-items:center;font-size:23px;font-weight:800;color:var(--on-a);
-  background:linear-gradient(135deg,var(--a1),var(--a2));box-shadow:0 10px 26px rgba(var(--a-rgb),.35)}
+.avatar{width:58px;height:58px;border-radius:50%;flex:none;display:grid;place-items:center;position:relative;border:0;padding:0;color:#fff;
+  background:linear-gradient(135deg,var(--b1),var(--b2),var(--b3));
+  box-shadow:0 8px 24px rgba(var(--a-rgb),.38),inset 0 2px 4px rgba(255,255,255,.5),inset 0 -2px 4px rgba(0,0,0,.1);animation:avatarHue 10s linear infinite}
+.avatar .face{position:absolute;left:0;top:0;right:0;bottom:0;border-radius:50%;overflow:hidden;display:grid;place-items:center}
+.avatar .face::after{content:"";position:absolute;left:0;top:0;right:0;bottom:0;border-radius:50%;background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.55),transparent 45%);pointer-events:none}
+.avatar .face svg{width:28px;height:28px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.18))}
+.avatar .face img{display:none;width:100%;height:100%;object-fit:cover}
+.avatar.has-photo{animation:none}.avatar.has-photo .face img{display:block}.avatar.has-photo .face svg{display:none}
+.av{position:relative;flex:none;width:58px;height:58px}
+.av .dot{position:absolute;z-index:2;position:absolute;bottom:0;inset-inline-end:0;width:16px;height:16px;border-radius:50%;border:2.5px solid var(--card-solid);display:grid;place-items:center;color:#fff;background:var(--ok);box-shadow:0 0 14px var(--ok)}
+.av .dot.off{background:var(--bad);box-shadow:0 0 14px var(--bad)}.av .dot.wait{background:var(--warn);box-shadow:0 0 14px var(--warn)}
+.av .dot .i{width:9px;height:9px;stroke-width:3.2}
+.avatar:focus-visible{outline-offset:4px}
+@keyframes avatarHue{0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(360deg)}}
+.pf-prev{width:116px;height:116px;margin:4px auto 16px}.pf-prev .avatar{width:116px;height:116px;cursor:default}.pf-prev .face svg{width:54px;height:54px}
+.pf-hint{text-align:center;font-size:12px;color:var(--tx3);margin:-4px 0 16px}
 .who-t{min-width:0}
 .who-t h2{font-size:20px;font-weight:800;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .who-t p{font-size:13px;color:var(--tx2);margin-top:2px}
@@ -131,14 +154,18 @@ html[data-theme=light] .card::before{opacity:1}
 /* ---------- rings ---------- */
 .ring-card{display:flex;flex-direction:column;align-items:center;text-align:center}
 .ring-card .ct{align-self:flex-start}
-.ring{position:relative;width:min(100%,150px);margin:2px auto 12px}
-.ring svg{display:block;width:100%;height:auto;transform:rotate(-90deg)}
-.ring .trk{fill:none;stroke:var(--track);stroke-width:9}
-.ring .bar{fill:none;stroke-width:9;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1),stroke-opacity .3s}
+.ring{position:relative;width:var(--rs,108px);height:var(--rs,108px);margin:14px auto 22px}
+.ring .sp1,.ring .sp2{position:absolute;border-radius:50%;pointer-events:none;z-index:0}
+.ring .sp1{left:-5px;top:-5px;right:-5px;bottom:-5px;border:3px dotted rgba(244,114,182,.5);filter:drop-shadow(0 0 6px rgba(244,114,182,.3));animation:spinCw 18s linear infinite,hueRotate 4s linear infinite}
+.ring .sp2{left:-11px;top:-11px;right:-11px;bottom:-11px;border:1.5px dotted rgba(167,139,250,.42);filter:drop-shadow(0 0 6px rgba(167,139,250,.25));animation:spinCcw 26s linear infinite,hueRotate 5s linear infinite reverse}
+@keyframes spinCw{to{transform:rotate(360deg)}}@keyframes spinCcw{to{transform:rotate(-360deg)}}@keyframes hueRotate{to{filter:hue-rotate(360deg)}}
+.ring svg{display:block;position:relative;z-index:2;width:100%;height:100%;transform:rotate(-90deg);filter:drop-shadow(0 4px 12px rgba(0,0,0,.15))}
+.ring .trk{fill:none;stroke:var(--track);stroke-width:5}
+.ring .bar{fill:none;stroke-width:5;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1),stroke-opacity .3s}
 .ring .bar.zero{stroke-opacity:0}
 .ring.warn .bar{stroke:var(--warn)}.ring.bad .bar{stroke:var(--bad)}
-.ring-c{position:absolute;left:0;top:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.ring-c b{font-size:27px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.ring-c{position:absolute;z-index:3;left:0;top:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-c b{font-size:25px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
 .ring-c small{font-size:11px;color:var(--tx3);margin-top:5px}
 .kv{font-size:12.5px;color:var(--tx2);line-height:1.8}
 .kv b{color:var(--tx);font-weight:700}
@@ -277,6 +304,8 @@ body.lock{overflow:hidden}
   padding:11px 18px;border-radius:99px;background:var(--card-solid);border:1px solid var(--line-2);box-shadow:0 14px 40px rgba(0,0,0,.4);font-weight:700;font-size:13px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;display:flex;align-items:center;gap:8px}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .toast .i{color:var(--ok);width:18px;height:18px}
+body.lock .toast{bottom:auto;top:calc(16px + env(safe-area-inset-top));transform:translate(-50%,-16px)}
+body.lock .toast.show{transform:translate(-50%,0)}
 
 /* skeleton */
 .skel{display:inline-block;min-width:60px;border-radius:8px;color:transparent!important;background:linear-gradient(90deg,var(--field),rgba(255,255,255,.14),var(--field));background-size:200% 100%;animation:sh 1.3s linear infinite;-webkit-user-select:none;user-select:none}
@@ -285,7 +314,8 @@ html[data-theme=light] .skel{background-image:linear-gradient(90deg,var(--field)
 .credit{text-align:center;font-size:11.5px;color:var(--tx3);padding:8px 0 0}
 
 /* ---------- responsive ---------- */
-@media(max-width:360px){.actions{gap:6px}.act{font-size:11px}.ring-c b{font-size:23px}.card{padding:15px}}
+@media(max-width:360px){.actions{gap:6px}.act{font-size:11px}.ring-c b{font-size:22px}.card{padding:15px}.ring{--rs:96px}}
+@media(min-width:640px){.ring{--rs:120px}}
 @media(min-width:640px){
   .shell{padding-inline:22px}
   .sheet{align-items:center}.sheet-p{border-radius:28px;padding-top:22px}.grab{display:none}
@@ -331,7 +361,13 @@ window.TEPER_CONFIG = {
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
 <linearGradient id="gA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--a1)"/><stop offset="1" style="stop-color:var(--a2)"/></linearGradient>
+<linearGradient id="gB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#38bdf8"/><stop offset="1" style="stop-color:var(--a1)"/></linearGradient>
+<linearGradient id="gBrand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--b1)"/><stop offset=".55" style="stop-color:var(--b2)"/><stop offset="1" style="stop-color:var(--b3)"/></linearGradient>
 </defs>
+<symbol id="i-brand" viewBox="0 0 24 24" stroke-linejoin="round"><path d="M12 2 4.2 5.1v5.9c0 4.9 3.3 9.1 7.8 11 4.5-1.9 7.8-6.1 7.8-11V5.1z" fill="none" stroke="url(#gBrand)" stroke-width="1.9"/><path d="M12 2v20c4.5-1.9 7.8-6.1 7.8-11V5.1z" fill="url(#gBrand)"/></symbol>
+<symbol id="i-person" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c0-4.1 3.4-7.5 7.5-7.5s7.5 3.4 7.5 7.5"/></symbol>
+<symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
 <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
 <symbol id="i-server" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
 <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1.5"/><rect width="7" height="7" x="14" y="3" rx="1.5"/><rect width="7" height="7" x="14" y="14" rx="1.5"/><rect width="7" height="7" x="3" y="14" rx="1.5"/></symbol>
@@ -368,7 +404,7 @@ window.TEPER_CONFIG = {
 <div class="shell">
   <aside class="rail">
     <div class="brand" aria-label="brand">
-      <span class="logo"><img alt=""><b class="mono">T</b></span>
+      <span class="logo"><img alt=""><svg class="shield" aria-hidden="true"><use href="#i-brand" xlink:href="#i-brand"/></svg></span>
       <span class="brand-txt"><strong class="brand-title">Teper</strong><small class="brand-subtitle"></small></span>
     </div>
     <nav class="nav" id="nav" aria-label="main">
@@ -384,7 +420,7 @@ window.TEPER_CONFIG = {
   <main class="main">
     <header class="top">
       <div class="brand">
-        <span class="logo"><img alt=""><b class="mono">T</b></span>
+        <span class="logo"><img alt=""><svg class="shield" aria-hidden="true"><use href="#i-brand" xlink:href="#i-brand"/></svg></span>
         <span class="brand-txt"><strong class="brand-title">Teper</strong><small class="brand-subtitle"></small></span>
       </div>
       <h1 class="page-title" id="page-title"></h1>
@@ -411,7 +447,9 @@ window.TEPER_CONFIG = {
       <div class="home">
         <div class="card hero">
           <div class="who">
-            <div class="avatar" id="avatar">T</div>
+            <span class="av"><button class="avatar" id="avatar" type="button" data-i18n-aria="profile_t" aria-label="Profile photo">
+              <span class="face"><svg aria-hidden="true"><use href="#i-person" xlink:href="#i-person"/></svg><img id="avatar-img" alt=""></span>
+            </button><span class="dot" id="avatar-dot"><svg class="i"><use href="#i-check" xlink:href="#i-check"/></svg></span></span>
             <div class="who-t">
               <span class="pill ok" id="status-pill"><span id="status-txt" class="skel">......</span></span>
               <h2 id="username" class="skel">........</h2>
@@ -427,7 +465,8 @@ window.TEPER_CONFIG = {
         <div class="card ring-card" id="card-traffic">
           <div class="ct"><svg class="i"><use href="#i-db" xlink:href="#i-db"/></svg><span data-i18n="traffic">حجم باقی‌مانده</span></div>
           <div class="ring" id="ring-traffic">
-            <svg viewBox="0 0 100 100"><circle class="trk" cx="50" cy="50" r="42" pathLength="100"/><circle class="bar zero" id="bar-traffic" cx="50" cy="50" r="42" pathLength="100" stroke="url(#gA)"/></svg>
+            <span class="sp1"></span><span class="sp2"></span>
+            <svg viewBox="0 0 100 100"><circle class="trk" cx="50" cy="50" r="45" pathLength="100"/><circle class="bar zero" id="bar-traffic" cx="50" cy="50" r="45" pathLength="100" stroke="url(#gA)"/></svg>
             <div class="ring-c"><b id="traffic-pct" class="skel">00%</b><small data-i18n="remaining">باقی</small></div>
           </div>
           <div class="kv"><b id="traffic-remain" class="skel">0.0 GB</b><br><span id="traffic-detail" class="skel ltr" style="display:inline-block;min-width:90px">...</span></div>
@@ -436,7 +475,8 @@ window.TEPER_CONFIG = {
         <div class="card ring-card" id="card-time">
           <div class="ct"><svg class="i"><use href="#i-clock" xlink:href="#i-clock"/></svg><span data-i18n="time">زمان باقی‌مانده</span></div>
           <div class="ring" id="ring-time">
-            <svg viewBox="0 0 100 100"><circle class="trk" cx="50" cy="50" r="42" pathLength="100"/><circle class="bar zero" id="bar-time" cx="50" cy="50" r="42" pathLength="100" stroke="url(#gA)"/></svg>
+            <span class="sp1"></span><span class="sp2"></span>
+            <svg viewBox="0 0 100 100"><circle class="trk" cx="50" cy="50" r="45" pathLength="100"/><circle class="bar zero" id="bar-time" cx="50" cy="50" r="45" pathLength="100" stroke="url(#gB)"/></svg>
             <div class="ring-c"><b id="time-num" class="skel">00</b><small id="time-unit">روز</small></div>
           </div>
           <div class="kv"><b id="time-date" class="skel">....</b><br><span id="time-detail" class="skel" style="min-width:90px">...</span></div>
@@ -528,6 +568,17 @@ window.TEPER_CONFIG = {
     <div class="qr"><canvas id="qr-canvas" width="10" height="10"></canvas></div>
     <div class="btns"><button class="btn" id="qr-save" type="button"><svg class="i"><use href="#i-download" xlink:href="#i-download"/></svg><span data-i18n="save_img">ذخیره تصویر</span></button>
     <button class="btn primary" data-close type="button" data-i18n="close">بستن</button></div>
+  </div>
+</div>
+<div class="sheet" id="sheet-profile" role="dialog" aria-modal="true" aria-labelledby="pf-title">
+  <div class="sheet-p"><div class="grab"></div>
+    <h3 id="pf-title"><svg class="i"><use href="#i-camera" xlink:href="#i-camera"/></svg><span data-i18n="profile_t">عکس پروفایل</span></h3>
+    <div class="pf-prev"><div class="avatar" id="pf-avatar"><span class="face"><svg aria-hidden="true"><use href="#i-person" xlink:href="#i-person"/></svg><img id="pf-img" alt=""></span></div></div>
+    <p class="pf-hint" data-i18n="photo_hint"></p>
+    <input type="file" id="pf-file" accept="image/*" hidden>
+    <div class="btns"><button class="btn primary" id="pf-choose" type="button"><svg class="i"><use href="#i-camera" xlink:href="#i-camera"/></svg><span data-i18n="photo_choose">انتخاب عکس</span></button>
+    <button class="btn" id="pf-remove" type="button"><svg class="i"><use href="#i-trash" xlink:href="#i-trash"/></svg><span data-i18n="photo_remove">حذف</span></button></div>
+    <button class="btn" data-close type="button" style="width:100%;margin-top:10px" data-i18n="close">بستن</button>
   </div>
 </div>
 <div class="sheet" id="sheet-apps" role="dialog" aria-modal="true" aria-labelledby="apps-title">
@@ -1479,6 +1530,7 @@ copied:"کپی شد",copy_fail:"کپی انجام نشد",qr_fail:"ساخت QR �
 err_load:"دریافت اطلاعات ناموفق بود",err_404:"اشتراک پیدا نشد",
 w_data:"حجم اشتراک رو به اتمام است",w_time:"زمان اشتراک رو به پایان است",b_exp:"اشتراک شما منقضی شده است",b_lim:"حجم اشتراک شما تمام شده است",
 credit:"ساخته‌شده با TeperTemplate",
+profile_t:"عکس پروفایل",photo_choose:"انتخاب عکس",photo_remove:"حذف",photo_hint:"عکس فقط روی همین دستگاه ذخیره می‌شود و برای کسی ارسال نمی‌شود.",photo_saved:"عکس پروفایل ذخیره شد",photo_fail:"عکس خوانده نشد",
 p_ios:"iOS",p_android:"اندروید",p_windows:"ویندوز",p_macos:"macOS",p_linux:"لینوکس",p_appletv:"Apple TV",p_androidtv:"Android TV",p_web:"وب",p_other:"سایر"
 },
 en:{
@@ -1505,6 +1557,7 @@ copied:"Copied",copy_fail:"Copy failed",qr_fail:"Could not build the QR code",sa
 err_load:"Could not load your data",err_404:"Subscription not found",
 w_data:"Your data is almost used up",w_time:"Your plan is about to expire",b_exp:"Your subscription has expired",b_lim:"Your data has been used up",
 credit:"Built with TeperTemplate",
+profile_t:"Profile photo",photo_choose:"Choose photo",photo_remove:"Remove",photo_hint:"The photo is stored only on this device and is never uploaded.",photo_saved:"Profile photo saved",photo_fail:"Could not read the image",
 p_ios:"iOS",p_android:"Android",p_windows:"Windows",p_macos:"macOS",p_linux:"Linux",p_appletv:"Apple TV",p_androidtv:"Android TV",p_web:"Web",p_other:"Other"
 }};
 var lang=CFG.lang==="en"?"en":"fa";
@@ -1514,7 +1567,7 @@ function $(id){return document.getElementById(id)}
 function qsa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
 function sget(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function sset(k,v){try{localStorage.setItem(k,v)}catch(e){}}
-var LS={theme:"teper_theme",lang:"teper_lang",panel:"teper_panel",sub:"teper_sub"};
+var LS={theme:"teper_theme",lang:"teper_lang",panel:"teper_panel",sub:"teper_sub",avatar:"teper_avatar"};
 var ESC={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"};
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return ESC[c]})}
 function safeUrl(u,custom){u=String(u||"").trim();if(!u)return"";if(/^https?:\/\//i.test(u))return u;if(custom&&/^[a-z][a-z0-9+.\-]*:/i.test(u)&&!/^(javascript|data|vbscript|file|blob):/i.test(u))return u;return""}
@@ -1539,25 +1592,25 @@ function applyTheme(){var th=resolveTheme(),h=document.documentElement;h.setAttr
   var u=document.querySelector("#theme-ic use");if(u){var id="#i-"+(th==="dark"?"sun":"moon");u.setAttribute("href",id);u.setAttribute("xlink:href",id)}}
 function brandName(){return String(CFG.name||"Teper").trim()||"Teper"}
 function brandSub(){var s=CFG.subtitle;if(s&&typeof s==="object")return s[lang]||s.fa||s.en||"";return s||""}
-function initial(n){var a=Array.from?Array.from(n.trim()):n.trim().split("");return(a[0]||"T").toUpperCase()}
+function initial(n){var a=Array.from?Array.from(String(n).trim()):String(n).trim().split("");return(a[0]||"T").toUpperCase()}
 function applyBrand(){
-  var name=brandName(),sub=brandSub(),logo=safeUrl(CFG.logoUrl),ini=initial(name);
+  var name=brandName(),sub=brandSub(),logo=safeUrl(CFG.logoUrl);
   qsa(".brand-title").forEach(function(e){e.textContent=name});
   qsa(".brand-subtitle").forEach(function(e){e.textContent=sub});
-  qsa(".mono").forEach(function(e){e.textContent=ini});
   qsa(".logo").forEach(function(box){var img=box.querySelector("img");
     if(logo){if(img.getAttribute("data-src")!==logo){img.setAttribute("data-src",logo);img.onload=function(){box.classList.add("has-img")};img.onerror=function(){box.classList.remove("has-img")};img.src=logo}}
     else box.classList.remove("has-img")});
   document.title=name+(sub?" · "+sub:"");
   var c=ACCENTS[CFG.accent],link=document.querySelector("link[rel=icon]");
   if(!link){link=document.createElement("link");link.rel="icon";document.head.appendChild(link)}
-  if(logo)link.href=logo;else{var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+c[0]+'"/><stop offset="1" stop-color="'+c[1]+'"/></linearGradient></defs><rect width="64" height="64" rx="18" fill="url(#g)"/><text x="32" y="45" font-size="36" font-weight="800" font-family="Arial,sans-serif" text-anchor="middle" fill="#0a0f1e">'+esc(ini)+'</text></svg>';link.href="data:image/svg+xml,"+encodeURIComponent(svg)}
+  if(logo)link.href=logo;else{var b=CFG.accent==="indigo"?["#38bdf8","#a78bfa","#f472b6"]:[c[0],c[1],c[0]],svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+b[0]+'"/><stop offset=".55" stop-color="'+b[1]+'"/><stop offset="1" stop-color="'+b[2]+'"/></linearGradient></defs><path d="M12 2 4.2 5.1v5.9c0 4.9 3.3 9.1 7.8 11 4.5-1.9 7.8-6.1 7.8-11V5.1z" fill="none" stroke="url(#g)" stroke-width="1.9" stroke-linejoin="round"/><path d="M12 2v20c4.5-1.9 7.8-6.1 7.8-11V5.1z" fill="url(#g)"/></svg>';link.href="data:image/svg+xml,"+encodeURIComponent(svg)}
   var cr=$("credit");cr.textContent=CFG.credit===false?"":t("credit");$("rail-foot").textContent=cr.textContent;
 }
 function applyLang(){
   var h=document.documentElement;h.lang=lang;h.dir=lang==="fa"?"rtl":"ltr";
   qsa("[data-i18n]").forEach(function(e){e.textContent=t(e.getAttribute("data-i18n"))});
   qsa("[data-i18n-ph]").forEach(function(e){e.placeholder=t(e.getAttribute("data-i18n-ph"))});
+  qsa("[data-i18n-aria]").forEach(function(e){e.setAttribute("aria-label",t(e.getAttribute("data-i18n-aria")))});
   $("lang-lbl").textContent=lang==="fa"?"EN":"فا";
   applyBrand();renderStatic();setTitle();
   if(S.loaded){renderAll()}
@@ -1684,7 +1737,7 @@ function renderAll(){
   var m=model(),pill=$("status-pill"),tone={active:"ok",hold:"warn",limited:"bad",expired:"bad",disabled:"bad"}[m.st];
   pill.className="pill "+tone;
   setT("status-txt",t({active:"st_active",hold:"st_hold",limited:"st_limited",expired:"st_expired",disabled:"st_disabled"}[m.st]));
-  setT("username",m.name);$("avatar").textContent=initial(String(m.name));
+  setT("username",m.name);setDot(m.st);
   setT("hero-sub",m.limit>0?t("hero_left",{r:fmtBytes(m.remain),t:fmtBytes(m.limit)}):t("hero_unl"));
   // traffic
   setT("traffic-pct",m.limit>0?nf(Math.round(m.pct),0)+"%":"∞");
@@ -1709,6 +1762,7 @@ function renderAll(){
   setT("acc-created",m.createdMs?fmtDate(m.createdMs):t("none"));
   renderBanners(m);renderHelp();
 }
+function setDot(st){var d=$("avatar-dot"),u=d.querySelector("use"),id=st==="active"?"#i-check":(st==="hold"?"#i-clock":"#i-x");d.className="dot"+(st==="active"?"":(st==="hold"?" wait":" off"));u.setAttribute("href",id);u.setAttribute("xlink:href",id)}
 function renderBanners(m){
   var h=[];
   if(m.st==="expired")h.push('<div class="banner bad">'+ic("alert")+'<span>'+esc(t("b_exp"))+'</span></div>');
@@ -1858,6 +1912,31 @@ function openQr(text,title){
 }
 $("qr-save").addEventListener("click",function(){var cv=$("qr-canvas");try{cv.toBlob(function(b){if(!b)return;var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="qr-"+brandName().replace(/[^\w\-]+/g,"_")+".png";document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)})}catch(e){toast(t("qr_fail"),true)}});
 
+/* ============ profile photo (stored only on this device) ============ */
+function setPhoto(src){
+  ["avatar","pf-avatar"].forEach(function(id){var a=$(id);a.classList.toggle("has-photo",!!src)});
+  $("avatar-img").src=src||"";$("pf-img").src=src||"";$("pf-remove").style.display=src?"":"none";
+}
+function loadPhoto(){var v=sget(LS.avatar);setPhoto(v&&/^data:image\/(jpeg|webp|png);base64,/.test(v)?v:"")}
+function readPhoto(file){
+  if(!file||!/^image\//.test(file.type)){toast(t("photo_fail"),true);return}
+  var fr=new FileReader();
+  fr.onerror=function(){toast(t("photo_fail"),true)};
+  fr.onload=function(){var im=new Image();
+    im.onerror=function(){toast(t("photo_fail"),true)};
+    im.onload=function(){
+      var S2=192,c=document.createElement("canvas");c.width=c.height=S2;var g=c.getContext("2d"),m=Math.min(im.width,im.height),sx=(im.width-m)/2,sy=(im.height-m)/2;
+      g.drawImage(im,sx,sy,m,m,0,0,S2,S2);
+      var out=c.toDataURL("image/webp",.86);if(out.indexOf("data:image/webp")!==0)out=c.toDataURL("image/jpeg",.86);
+      sset(LS.avatar,out);setPhoto(out);toast(t("photo_saved"));
+    };im.src=fr.result};
+  fr.readAsDataURL(file);
+}
+$("avatar").addEventListener("click",function(){openSheet("sheet-profile")});
+$("pf-choose").addEventListener("click",function(){$("pf-file").click()});
+$("pf-file").addEventListener("change",function(e){var f=e.target.files&&e.target.files[0];readPhoto(f);e.target.value=""});
+$("pf-remove").addEventListener("click",function(){try{localStorage.removeItem(LS.avatar)}catch(e){}setPhoto("")});
+
 /* ============ bindings ============ */
 $("btn-theme").addEventListener("click",function(){sset(LS.theme,resolveTheme()==="dark"?"light":"dark");applyTheme()});
 $("btn-lang").addEventListener("click",function(){lang=lang==="fa"?"en":"fa";sset(LS.lang,lang);applyLang()});
@@ -1888,7 +1967,7 @@ function loadAll(ctx){
 }
 function init(){
   var sl=sget(LS.lang);if(sl==="fa"||sl==="en")lang=sl;
-  applyTheme();applyLang();
+  applyTheme();applyLang();loadPhoto();
   var auto=detectUrl();
   if(auto)return loadAll(auto);
   var saved=sget(LS.sub),ctx=saved&&makeContext("",parseInput(saved));

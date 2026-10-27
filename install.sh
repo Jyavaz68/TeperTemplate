@@ -37,6 +37,7 @@ if [[ -t 1 && -z "${NO_COLOR:-}" ]]; then
   R=$'\033[0m'; B=$'\033[1m'; D=$'\033[2m'
   RED=$'\033[38;5;203m'; GRN=$'\033[38;5;84m'; YEL=$'\033[38;5;221m'; ACC=$'\033[38;5;141m'; CYN=$'\033[38;5;117m'
 else R=""; B=""; D=""; RED=""; GRN=""; YEL=""; ACC=""; CYN=""; fi
+case "${LC_ALL:-${LC_CTYPE:-${LANG:-}}}" in *[Uu][Tt][Ff]-8*|*[Uu][Tt][Ff]8*) ;; *) command -v locale >/dev/null 2>&1 && locale -a 2>/dev/null | grep -qi '^c\.utf-\?8$' && export LC_ALL=C.UTF-8;; esac
 UTF8=0; case "${LC_ALL:-${LC_CTYPE:-${LANG:-}}}" in *[Uu][Tt][Ff]-8*|*[Uu][Tt][Ff]8*) UTF8=1;; esac
 if (( UTF8 )); then OK="✔"; BAD="✖"; ARW="▸"; DOT="•"; else OK="+"; BAD="x"; ARW=">"; DOT="*"; fi
 
@@ -74,7 +75,8 @@ ask() { # ask VAR "Prompt" "default"
   local __var="$1" __prompt="$2" __def="${3:-}" __ans=""
   if (( YES )); then printf -v "$__var" '%s' "$__def"; return 0; fi
   have_tty || die "No terminal available. Re-run with --yes and the --name/--logo/... flags."
-  if [[ -n "$__def" ]]; then printf '  %s?%s %s %s[%s]%s: ' "$ACC" "$R" "$__prompt" "$D" "$__def" "$R" >/dev/tty
+  if [[ -n "$__def" && -z "$(printf '%s' "$__def" | LC_ALL=C tr -d '\040-\176')" ]]; then printf '  %s?%s %s %s[%s]%s: ' "$ACC" "$R" "$__prompt" "$D" "$__def" "$R" >/dev/tty
+  elif [[ -n "$__def" ]]; then printf '  %s?%s %s %s[Enter = keep current]%s: ' "$ACC" "$R" "$__prompt" "$D" "$R" >/dev/tty
   else printf '  %s?%s %s: ' "$ACC" "$R" "$__prompt" >/dev/tty; fi
   IFS= read -r __ans </dev/tty || true
   printf -v "$__var" '%s' "${__ans:-$__def}"
@@ -87,7 +89,7 @@ confirm() { # confirm "Question" default(y/n)
 }
 
 # ---- helpers ----------------------------------------------------------------
-need_root() { [[ $EUID -eq 0 ]] || die "Please run as root:  sudo bash $0 ${ACTION:-}"; }
+need_root() { [[ $EUID -eq 0 ]] || die "Please run as root (e.g. download install.sh, then: sudo bash install.sh ${ACTION:-})"; }
 need_cmds() {
   local missing=() c
   for c in curl python3; do command -v "$c" >/dev/null 2>&1 || missing+=("$c"); done
@@ -235,7 +237,7 @@ print(d)' "$1"; }
     (( HAVE_SUB_FA ))  || ask sfa  "Tagline, Persian" "$sfa"
     (( HAVE_SUB_EN ))  || ask sen  "Tagline, English" "$sen"
     if (( ! HAVE_LOGO )); then
-      while :; do ask v "Logo image URL (https, PNG/SVG/WebP; '-' for none = letter logo)" "${logo:--}"
+      while :; do ask v "Logo image URL (https, PNG/SVG/WebP; '-' = default shield logo)" "${logo:--}"
         v="$(check_logo "$v")"; [[ "$v" == INVALID ]] || { logo="$v"; break; }; warn "Please enter a valid https:// image URL, or '-' to skip."; done
     fi
     if (( ! HAVE_SUPPORT )); then
@@ -308,7 +310,7 @@ summary() { # summary CONFIG_JSON
   CUR="$1" python3 - <<'PY'
 import json, os
 c = json.loads(os.environ["CUR"])
-rows = [("Brand", c["name"]), ("Tagline", c["subtitle"]["fa"] + "  /  " + c["subtitle"]["en"]), ("Logo", c["logoUrl"] or "(letter logo)"),
+rows = [("Brand", c["name"]), ("Tagline", c["subtitle"]["fa"] + "  /  " + c["subtitle"]["en"]), ("Logo", c["logoUrl"] or "(default shield logo)"),
         ("Support", c["supportUrl"] or "(none)"), ("Accent", c["accent"]), ("Language", c["lang"]), ("Theme", c["theme"])]
 for k, v in rows: print(f"    {k:<9} {v}")
 PY
@@ -414,7 +416,7 @@ Options
   -y, --yes               Non-interactive (use flags / saved values)
   --name TEXT             Brand name shown in the logo
   --subtitle-fa TEXT      Persian tagline          --subtitle-en TEXT   English tagline
-  --logo URL              https image URL ('-' = letter logo)
+  --logo URL              https image URL ('-' = default shield logo)
   --support LINK          @telegram_id, t.me/..., https://...
   --accent NAME           indigo | emerald | rose | amber | sky
   --lang fa|en            default language         --theme dark|light|auto
