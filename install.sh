@@ -135,7 +135,8 @@ d["name"] = clean(d["name"], 40) or "Teper"
 d["subtitle"] = {k: clean(v, 60) for k, v in d["subtitle"].items()}
 d["logoUrl"] = clean(d["logoUrl"], 500)
 d["supportUrl"] = clean(d["supportUrl"], 500)
-if d["accent"] not in ("indigo","emerald","rose","amber","sky"): d["accent"] = "indigo"
+ACC = ("indigo","violet","fuchsia","pink","rose","red","orange","amber","lime","emerald","teal","cyan","sky","blue")
+if not (d["accent"] in ACC or re.fullmatch(r"#[0-9a-fA-F]{6}", str(d["accent"]))): d["accent"] = "indigo"
 if d["lang"] not in ("fa","en"): d["lang"] = "fa"
 if d["theme"] not in ("dark","light","auto"): d["theme"] = "dark"
 print(json.dumps(d, ensure_ascii=False))
@@ -211,9 +212,14 @@ pick_accent() {
   say "Accent color:" >&2
   printf '    %s1%s \033[48;5;105m  \033[0m Indigo   %s2%s \033[48;5;79m  \033[0m Emerald   %s3%s \033[48;5;204m  \033[0m Rose\n' "$B" "$R" "$B" "$R" "$B" "$R" >&2
   printf '    %s4%s \033[48;5;214m  \033[0m Amber    %s5%s \033[48;5;75m  \033[0m Sky\n' "$B" "$R" "$B" "$R" >&2
-  local def=1; case "$cur" in emerald) def=2;; rose) def=3;; amber) def=4;; sky) def=5;; esac
-  ask a "Choose 1-5" "$def"
-  case "$a" in 2|emerald) echo emerald;; 3|rose) echo rose;; 4|amber) echo amber;; 5|sky) echo sky;; *) echo indigo;; esac
+  say "  ${D}or type: violet fuchsia pink red orange lime teal cyan blue, or a hex like #ff5a5f${R}" >&2
+  local def=1; case "$cur" in indigo) def=1;; emerald) def=2;; rose) def=3;; amber) def=4;; sky) def=5;; *) def="$cur";; esac
+  ask a "Choose 1-5 / name / #hex" "$def"
+  case "$a" in
+    1|indigo) echo indigo;; 2|emerald) echo emerald;; 3|rose) echo rose;; 4|amber) echo amber;; 5|sky) echo sky;;
+    violet|fuchsia|pink|red|orange|lime|teal|cyan|blue) echo "$a";;
+    *) if [[ "$a" =~ ^#[0-9A-Fa-f]{6}$ ]]; then echo "$a"; else echo indigo; fi;;
+  esac
 }
 collect_config() { # fills ANS_JSON using saved values as defaults
   local cur; cur="$(STATE="$STATE_FILE" TEPER_ANS="{}" py_cfg)"
@@ -418,7 +424,7 @@ Options
   --subtitle-fa TEXT      Persian tagline          --subtitle-en TEXT   English tagline
   --logo URL              https image URL ('-' = default shield logo)
   --support LINK          @telegram_id, t.me/..., https://...
-  --accent NAME           indigo | emerald | rose | amber | sky
+  --accent NAME|#HEX      indigo emerald rose amber sky violet fuchsia pink red orange lime teal cyan blue, or #rrggbb
   --lang fa|en            default language         --theme dark|light|auto
   --force                 reinstall even if the version is the same
   --remote                ignore a local index.html and download from GitHub

@@ -12,7 +12,8 @@ Modern, fully brandable subscription page for Pasarguard
 
 ## ✨ امکانات
 
-- طراحی شیشه‌ای (Liquid Glass) با پوسته‌ی **تیره و روشن** و ۵ رنگ تأکید
+- طراحی شیشه‌ای (Liquid Glass) با پوسته‌ی **تیره و روشن**، حباب‌های رنگی متحرک پشت صفحه و کارت‌های بلور‌شده
+- **شخصی‌سازی رنگ توسط کاربر** (دکمه‌ی پالت بالای صفحه): ۱۴ رنگ آماده یا رنگ دلخواه برای دکمه‌ها، و رنگ پس‌زمینه‌ی تیره/روشن/دلخواه؛ فقط روی دستگاه خود کاربر ذخیره می‌شود
 - **منوی پایین** روی موبایل و تبلت، **سایدبار** روی دسکتاپ (۴ بخش: خانه، کانفیگ‌ها، اپ‌ها، راهنما)
 - **فارسی / انگلیسی** با تغییر خودکار RTL/LTR
 - حلقه‌ی حجم و زمان، نمودار مصرف ۲۴ ساعته و ۷ روزه، هشدار اتمام حجم یا زمان
@@ -50,8 +51,8 @@ curl -fsSL https://raw.githubusercontent.com/Jyavaz68/TeperTemplate/main/install
 | Brand name | نام برند؛ داخل لوگو و بالای صفحه نمایش داده می‌شود |
 | Tagline (fa / en) | شعار زیر نام برند |
 | Logo image URL | لینک `https` تصویر لوگو (PNG/SVG/WebP). با `-` لوگوی پیش‌فرض (سپر با نام برند گرادیانی) استفاده می‌شود |
-| Support link | `@آیدی_تلگرام` یا لینک `https` |
-| Accent color | Indigo، Emerald، Rose، Amber، Sky |
+| Support link | `@آیدی_تلگرام` یا لینک `https`. اگر خالی بماند (`-`)، در بخش راهنما نوشته می‌شود «به کسی که کانفیگ را از او خریده‌اید پیام بدهید» |
+| Accent color | Indigo، Emerald، Rose، Amber، Sky یا نام‌های دیگر (violet، fuchsia، pink، red، orange، lime، teal، cyan، blue) یا هر رنگ هگز مثل `#ff5a5f` |
 | Language / Theme | زبان و پوسته‌ی پیش‌فرض |
 
 نصب‌کننده خودش `CUSTOM_TEMPLATES_DIRECTORY` و `SUBSCRIPTION_PAGE_TEMPLATE` را در `/opt/pasarguard/.env` تنظیم می‌کند، از قالب قبلی شما پشتیبان می‌گیرد و پاسارگاد را ریستارت می‌کند. بعد از نصب دستور **`teper`** هم ساخته می‌شود.
