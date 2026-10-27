@@ -24,10 +24,10 @@ Modern, fully brandable subscription page for Pasarguard
 
 ## 🚀 نصب
 
-روی سرور پاسارگاد (با دسترسی root):
+روی سرور پاسارگاد (با کاربر root یا با sudo):
 
 ```bash
-sudo bash <(curl -fsSL https://raw.githubusercontent.com/Jyavaz68/TeperTemplate/main/install.sh)
+curl -fsSL https://raw.githubusercontent.com/Jyavaz68/TeperTemplate/main/install.sh -o install.sh && sudo bash install.sh
 ```
 
 منوی نصب باز می‌شود:
