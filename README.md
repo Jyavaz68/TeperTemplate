@@ -91,16 +91,12 @@ sudo bash install.sh install --yes \
 3. `pasarguard restart`
 4. برندسازی دستی: بلوک `window.TEPER_CONFIG` بالای `index.html` را ویرایش کنید.
 
-## 🛠 برای ناشر (انتشار در گیت‌هاب)
+## 🎨 شخصی‌سازی بیشتر
 
-1. ریپازیتوری **TeperTemplate** را بسازید و همه‌ی فایل‌ها را آپلود کنید.
-2. نصب‌کننده روی ریپازیتوری `Jyavaz68/TeperTemplate` (شاخه‌ی `main`) تنظیم شده است. اگر اسم کاربری یا شاخه فرق دارد، مقدار `GH_USER` و `BRANCH` را در بالای `install.sh` عوض کنید.
-3. **برای هر آپدیت:** فایل `index.html` را تغییر دهید، عدد داخل `VERSION` را بالا ببرید (مثلاً `1.0.1`) و یک بخش در `CHANGELOG.md` اضافه کنید. کاربران با `teper update` نسخه‌ی جدید را می‌گیرند.
-4. اگر نمی‌خواهید نوشته‌ی «ساخته‌شده با TeperTemplate» پایین صفحه دیده شود، در `window.TEPER_CONFIG` مقدار `"credit": false` بگذارید.
+بعد از نصب، بالای فایل `index.html` یک بلوک `window.TEPER_CONFIG` هست که می‌توانید مستقیم ویرایشش کنید (یا با `teper` ← **Change branding** از طریق نصب‌کننده).
 
-### شخصی‌سازی اپ‌های پیشنهادی
-
-داخل `TEPER_CONFIG` می‌توانید اپ پیشنهادی هر سیستم‌عامل را عوض کنید:
+- **مخفی کردن نوشته‌ی «ساخته‌شده با TeperTemplate»:** مقدار `"credit": false`
+- **عوض کردن اپ پیشنهادی هر سیستم‌عامل:**
 
 ```js
 "recommended": { "android": { "name": "Hiddify", "url": "https://…", "store": "GitHub" } }
