@@ -1,3 +1,7 @@
+## v1.3.3
+- Top block: the tagline under the brand name is hidden (more room for the username); it still shows in the page title
+- Account card: shorter English labels and "—" for empty values, so numbers are no longer cut off
+
 ## v1.3.2
 - Top block: profile (avatar, name, status) next to the logo on one row, with the language and theme buttons below it in the same block
 - Account details and expiry date are compact again (single-line rows, no title), like the classic layout

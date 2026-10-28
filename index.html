@@ -192,7 +192,9 @@ html.lite *,html.lite *::before,html.lite *::after{animation:none!important}
 .acc .row:first-child{padding-top:2px}.acc .row:last-child{padding-bottom:2px}
 .acc .row .l{font-size:11.5px;gap:6px;white-space:nowrap}
 .acc .row .l .i{width:15px;height:15px}
-.acc .row .v{font-size:12.5px;min-width:0}
+.acc .row .v{font-size:12.5px;flex:none;max-width:60%}
+.acc .row .l{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.topcard .brand-subtitle{display:none}
 .exp{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
 .exp-lbl{display:flex;align-items:center;gap:6px;color:var(--tx2);font-size:12px;font-weight:700}
 .exp-lbl .i{width:15px;height:15px;color:var(--a-ink)}
@@ -1586,7 +1588,7 @@ st_active:"Active",st_disabled:"Disabled",st_limited:"Data used up",st_expired:"
 theme_to_light:"Light theme",theme_to_dark:"Dark theme",expiry:"Expiry date",hero_left:"{r} of {t} left",hero_unl:"Unlimited data",connect:"Connect",copy_sub:"Copy link",
 traffic:"Data remaining",remaining:"left",used:"Used",total:"Total",unlimited:"Unlimited",used_of:"{u} / {t}",
 time:"Time remaining",days:"days",hours:"hours",ends:"Ends: {d}",no_expiry:"No expiry",expired:"Expired",on_hold:"Starts on first connection",left_days:"{n} days left",left_hours:"{n} hours left",
-account:"Account",devices:"Device limit",last_ip:"Last IP",lifetime:"Lifetime usage",created:"Created",none:"Not recorded",
+account:"Account",devices:"Devices",last_ip:"Last IP",lifetime:"Total used",created:"Created",none:"—",
 quick:"Quick actions",a_copy:"Copy link",a_qr:"QR code",a_configs:"Configs",a_support:"Support",
 usage:"Usage",r_day:"24h",r_week:"7d",u_total:"Total",u_peak:"Peak",u_avg:"Average",no_stats:"No usage data yet",loading:"Loading…",
 cfg_sub:"Subscription link",cfg_title:"Configs",search:"Search configs…",copy_all:"Copy all",no_cfg:"No configs found",
