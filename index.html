@@ -80,7 +80,13 @@ a{color:inherit}
 .brand-txt small{font-size:11.5px;color:var(--tx3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* top bar */
-.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.topcard{display:flex;flex-direction:column;gap:0;padding:14px 16px}
+.top-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.topcard .who{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.topcard .who-t{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.topcard .pill{margin-bottom:0}
+.topcard .av,.topcard .avatar{width:52px;height:52px}
+body.no-ctx .topcard .who{display:none}
 .page-title{display:none;font-size:22px;font-weight:800}
 .top-actions{display:flex;gap:8px;flex:none}
 .iconbtn{width:42px;height:42px;border-radius:14px;border:1px solid var(--gbd);background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.02)),var(--card);box-shadow:inset 0 1px 0 var(--hi),0 6px 18px rgba(0,0,0,.12);display:grid;place-items:center;transition:background .2s,border-color .2s,transform .15s}
@@ -111,13 +117,11 @@ html.lite *,html.lite *::before,html.lite *::after{animation:none!important}
 .view.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .home{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
-.home>.hero,.home>.acc,.home>.quick,.home>.usage{grid-column:span 6}
+.home>.quick,.home>.usage{grid-column:span 6}
+.home>.acc,.home>.exp{grid-column:span 3}
 .home>.ring-card{grid-column:span 3}
 
 /* ---------- hero ---------- */
-.hero{overflow:hidden;display:flex;flex-direction:column;gap:18px}
-.hero{background:radial-gradient(320px 300px at 100% -20%,rgba(var(--a-rgb),.3),transparent 66%),linear-gradient(180deg,var(--gloss),transparent 42%),var(--card)}
-html[dir=rtl] .hero{background:radial-gradient(320px 300px at 0% -20%,rgba(var(--a-rgb),.3),transparent 66%),linear-gradient(180deg,var(--gloss),transparent 42%),var(--card)}
 .who{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
 .avatar{width:58px;height:58px;border-radius:50%;flex:none;display:grid;place-items:center;position:relative;border:0;padding:0;color:#fff;
   background:linear-gradient(135deg,var(--b1),var(--b2),var(--b3));
@@ -177,6 +181,15 @@ html[dir=rtl] .hero{background:radial-gradient(320px 300px at 0% -20%,rgba(var(-
 .row:last-child{border-bottom:0;padding-bottom:0}.row:first-of-type{padding-top:0}
 .row .l{display:flex;align-items:center;gap:9px;color:var(--tx2);font-size:13px}
 .row .l .i{width:17px;height:17px;color:var(--a-ink)}
+.acc .row,.exp .row{flex-direction:column;align-items:flex-start;gap:3px;padding:9px 0}
+.acc .row .l,.exp .row .l{font-size:11.5px;gap:6px}.acc .row .l .i,.exp .row .l .i{width:15px;height:15px}
+html[dir=rtl] .acc .row .v,html[dir=rtl] .exp .row .v{text-align:right}html[dir=ltr] .acc .row .v,html[dir=ltr] .exp .row .v{text-align:left}
+.acc .row .v,.exp .row .v{max-width:100%;font-size:13px}
+.exp{display:flex;flex-direction:column}
+.exp .ct{align-self:flex-start}
+.exp-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;padding:10px 0 12px}
+.exp-date{font-size:19px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.3}
+.exp-body small{font-size:12px;color:var(--tx2)}
 .row .v{font-weight:700;font-size:13.5px;text-align:end;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-variant-numeric:tabular-nums}
 
 /* quick actions */
@@ -317,6 +330,7 @@ html[data-theme=light] .skel{background-image:linear-gradient(90deg,var(--field)
 
 /* ---------- responsive ---------- */
 @media(max-width:360px){.actions{gap:6px}.act{font-size:11px}.ring-c b{font-size:22px}.card{padding:15px}.ring{--rs:96px}}
+@media(max-width:340px){.home>.acc,.home>.exp{grid-column:span 6}.exp-date{font-size:17px}}
 @media(min-width:640px){.ring{--rs:120px}}
 @media(min-width:640px){
   .shell{padding-inline:22px}
@@ -333,7 +347,6 @@ html[data-theme=light] .skel{background-image:linear-gradient(90deg,var(--field)
   .nav-btn:hover{color:var(--tx)}
   .nav-ind{border-radius:17px}
   .toast{bottom:30px}
-  .hero{flex-direction:row;align-items:center;justify-content:space-between}
   .two{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
   .rail-foot{display:block;font-size:11.5px;color:var(--tx3);padding:0 8px}
   .credit{display:none}
@@ -343,6 +356,14 @@ html[data-theme=light] .skel{background-image:linear-gradient(90deg,var(--field)
 html[data-custom=on] .avatar:not(.has-photo){animation:none}
 .sup-id{font-weight:800;font-size:14px;color:var(--a-ink);direction:ltr;unicode-bidi:isolate}
 
+/* support popup (centered, like a dialog) */
+#sheet-support{align-items:center;padding:20px}
+#sheet-support .sheet-p{max-width:380px;border-radius:28px;padding:28px 22px 22px;animation:popIn .28s cubic-bezier(.2,.9,.3,1.2) both}
+#sheet-support .grab{display:none}
+#sheet-support .support{gap:14px;padding:0}
+#sheet-support .support p{font-size:14.5px;line-height:1.95;color:var(--tx);max-width:none}
+#sheet-support .btn{width:100%;margin-top:4px}
+@keyframes popIn{from{transform:scale(.9);opacity:0}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 </style>
@@ -425,15 +446,26 @@ window.TEPER_CONFIG = {
   </aside>
 
   <main class="main">
-    <header class="top">
-      <div class="brand">
-        <span class="logo"><img alt=""><svg class="shield" aria-hidden="true"><use href="#i-brand" xlink:href="#i-brand"/></svg></span>
-        <span class="brand-txt"><strong class="brand-title">Teper</strong><small class="brand-subtitle"></small></span>
+    <header class="top card topcard">
+      <div class="top-row">
+        <div class="brand">
+          <span class="logo"><img alt=""><svg class="shield" aria-hidden="true"><use href="#i-brand" xlink:href="#i-brand"/></svg></span>
+          <span class="brand-txt"><strong class="brand-title">Teper</strong><small class="brand-subtitle"></small></span>
+        </div>
+        <h1 class="page-title" id="page-title"></h1>
+        <div class="top-actions">
+          <button class="iconbtn txt" id="btn-lang" type="button" aria-label="Language"><svg class="i"><use href="#i-lang" xlink:href="#i-lang"/></svg>&nbsp;<span id="lang-lbl">EN</span></button>
+          <button class="iconbtn" id="btn-theme" type="button" aria-label="Theme"><svg class="i" id="theme-ic"><use href="#i-sun" xlink:href="#i-sun"/></svg></button>
+        </div>
       </div>
-      <h1 class="page-title" id="page-title"></h1>
-      <div class="top-actions">
-        <button class="iconbtn txt" id="btn-lang" type="button" aria-label="Language"><svg class="i"><use href="#i-lang" xlink:href="#i-lang"/></svg>&nbsp;<span id="lang-lbl">EN</span></button>
-        <button class="iconbtn" id="btn-theme" type="button" aria-label="Theme"><svg class="i" id="theme-ic"><use href="#i-sun" xlink:href="#i-sun"/></svg></button>
+      <div class="who">
+        <span class="av"><button class="avatar" id="avatar" type="button" data-i18n-aria="profile_t" aria-label="Profile photo">
+          <span class="face"><svg aria-hidden="true"><use href="#i-person" xlink:href="#i-person"/></svg><img id="avatar-img" alt=""></span>
+        </button><span class="dot" id="avatar-dot"><svg class="i"><use href="#i-check" xlink:href="#i-check"/></svg></span></span>
+        <div class="who-t">
+          <h2 id="username" class="skel">........</h2>
+          <span class="pill ok" id="status-pill"><span id="status-txt" class="skel">......</span></span>
+        </div>
       </div>
     </header>
 
@@ -452,24 +484,16 @@ window.TEPER_CONFIG = {
     <!-- HOME -->
     <section class="view active" id="view-home">
       <div class="home">
-        <div class="card hero">
-          <div class="who">
-            <span class="av"><button class="avatar" id="avatar" type="button" data-i18n-aria="profile_t" aria-label="Profile photo">
-              <span class="face"><svg aria-hidden="true"><use href="#i-person" xlink:href="#i-person"/></svg><img id="avatar-img" alt=""></span>
-            </button><span class="dot" id="avatar-dot"><svg class="i"><use href="#i-check" xlink:href="#i-check"/></svg></span></span>
-            <div class="who-t">
-              <span class="pill ok" id="status-pill"><span id="status-txt" class="skel">......</span></span>
-              <h2 id="username" class="skel">........</h2>
-              <p id="hero-sub" class="skel" style="min-width:140px">...........</p>
-            </div>
-          </div>
-        </div>
-
         <div class="card acc">
           <div class="ct"><svg class="i"><use href="#i-user" xlink:href="#i-user"/></svg><span data-i18n="account">مشخصات حساب</span></div>
           <div class="row"><span class="l"><svg class="i"><use href="#i-phone" xlink:href="#i-phone"/></svg><span data-i18n="devices">دستگاه مجاز</span></span><span class="v skel" id="acc-devices">--</span></div>
           <div class="row"><span class="l"><svg class="i"><use href="#i-globe" xlink:href="#i-globe"/></svg><span data-i18n="last_ip">آخرین IP</span></span><span class="v ltr skel" id="acc-ip">--</span></div>
           <div class="row"><span class="l"><svg class="i"><use href="#i-activity" xlink:href="#i-activity"/></svg><span data-i18n="lifetime">کل مصرف</span></span><span class="v skel" id="acc-life">--</span></div>
+        </div>
+
+        <div class="card exp">
+          <div class="ct"><svg class="i"><use href="#i-cal" xlink:href="#i-cal"/></svg><span data-i18n="expiry">تاریخ انقضا</span></div>
+          <div class="exp-body"><b class="exp-date skel" id="exp-date">........</b><small class="skel" id="exp-sub" style="min-width:70px">.....</small></div>
           <div class="row"><span class="l"><svg class="i"><use href="#i-cal" xlink:href="#i-cal"/></svg><span data-i18n="created">تاریخ ساخت</span></span><span class="v skel" id="acc-created">--</span></div>
         </div>
 
@@ -551,14 +575,14 @@ window.TEPER_CONFIG = {
         <div id="faq"></div>
       </div>
       <div class="card" style="margin-top:14px">
-          <div class="support">
-            <div class="big"><svg class="i"><use href="#i-life" xlink:href="#i-life"/></svg></div>
-            <b style="font-size:17px" data-i18n="sup_title">پشتیبانی</b>
-            <p id="sup-desc"></p>
-            <span class="sup-id" id="sup-id" style="display:none"></span>
-            <a class="btn primary" id="sup-btn" target="_blank" rel="noopener noreferrer" style="display:none"><svg class="i"><use href="#i-send" xlink:href="#i-send"/></svg><span data-i18n="sup_btn">ارتباط با پشتیبانی</span></a>
-          </div>
+        <div class="support">
+          <div class="big"><svg class="i"><use href="#i-life" xlink:href="#i-life"/></svg></div>
+          <b style="font-size:17px" data-i18n="sup_title">پشتیبانی</b>
+          <p data-i18n="sup_hint"></p>
+          <span class="sup-id" id="sup-id" style="display:none"></span>
+          <button class="btn primary" id="sup-btn" type="button"><svg class="i"><use href="#i-send" xlink:href="#i-send"/></svg><span data-i18n="sup_btn">ارتباط با پشتیبانی</span></button>
         </div>
+      </div>
     </section>
 
     <div class="credit" id="credit"></div>
@@ -1524,7 +1548,7 @@ fa:{
 nav_home:"خانه",nav_configs:"کانفیگ‌ها",nav_apps:"اپ‌ها",nav_help:"راهنما",
 t_home:"داشبورد",t_configs:"کانفیگ‌ها و لینک‌ها",t_apps:"اپلیکیشن‌ها",t_help:"راهنما و پشتیبانی",
 st_active:"فعال",st_disabled:"غیرفعال",st_limited:"حجم تمام شده",st_expired:"منقضی شده",st_hold:"در انتظار اتصال",
-hero_left:"{r} از {t} باقی‌مانده",hero_unl:"حجم نامحدود",connect:"اتصال سریع",copy_sub:"کپی لینک",
+sup_hint:"برای پشتیبانی، رفع مشکل یا تمدید اشتراک روی دکمه‌ی زیر بزنید.",expiry:"تاریخ انقضا",hero_left:"{r} از {t} باقی‌مانده",hero_unl:"حجم نامحدود",connect:"اتصال سریع",copy_sub:"کپی لینک",
 traffic:"حجم باقی‌مانده",remaining:"باقی",used:"مصرف‌شده",total:"کل",unlimited:"نامحدود",used_of:"{u} / {t}",
 time:"زمان باقی‌مانده",days:"روز",hours:"ساعت",ends:"پایان: {d}",no_expiry:"بدون انقضا",expired:"منقضی شده",on_hold:"پس از اولین اتصال شروع می‌شود",left_days:"{n} روز مانده",left_hours:"{n} ساعت مانده",
 account:"مشخصات حساب",devices:"دستگاه مجاز",last_ip:"آخرین IP",lifetime:"کل مصرف",created:"تاریخ ساخت",none:"ثبت نشده",
@@ -1553,7 +1577,7 @@ en:{
 nav_home:"Home",nav_configs:"Configs",nav_apps:"Apps",nav_help:"Help",
 t_home:"Dashboard",t_configs:"Configs & links",t_apps:"Applications",t_help:"Help & support",
 st_active:"Active",st_disabled:"Disabled",st_limited:"Data used up",st_expired:"Expired",st_hold:"On hold",
-hero_left:"{r} of {t} left",hero_unl:"Unlimited data",connect:"Connect",copy_sub:"Copy link",
+sup_hint:"Tap the button below for support, issues or renewals.",expiry:"Expiry date",hero_left:"{r} of {t} left",hero_unl:"Unlimited data",connect:"Connect",copy_sub:"Copy link",
 traffic:"Data remaining",remaining:"left",used:"Used",total:"Total",unlimited:"Unlimited",used_of:"{u} / {t}",
 time:"Time remaining",days:"days",hours:"hours",ends:"Ends: {d}",no_expiry:"No expiry",expired:"Expired",on_hold:"Starts on first connection",left_days:"{n} days left",left_hours:"{n} hours left",
 account:"Account",devices:"Device limit",last_ip:"Last IP",lifetime:"Lifetime usage",created:"Created",none:"Not recorded",
@@ -1797,7 +1821,6 @@ function renderAll(){
   pill.className="pill "+tone;
   setT("status-txt",t({active:"st_active",hold:"st_hold",limited:"st_limited",expired:"st_expired",disabled:"st_disabled"}[m.st]));
   setT("username",m.name);setDot(m.st);
-  setT("hero-sub",m.limit>0?t("hero_left",{r:fmtBytes(m.remain),t:fmtBytes(m.limit)}):t("hero_unl"));
   // traffic
   setT("traffic-pct",m.limit>0?nf(Math.round(m.pct),0)+"%":"∞");
   setT("traffic-remain",m.limit>0?fmtBytes(m.remain):t("unlimited"));
@@ -1805,13 +1828,14 @@ function renderAll(){
   setRing("ring-traffic","bar-traffic",m.limit>0?m.pct:100,m.limit>0?(m.pct<=5?"bad":m.pct<=15?"warn":""):"");
   // time
   var days=m.expireMs?Math.max(0,Math.ceil(m.diff/864e5)):0,hrs=m.expireMs?Math.max(0,Math.ceil(m.diff/36e5)):0;
-  if(m.hold&&!m.expireMs){setT("time-num","—");$("time-unit").textContent="";setT("time-date",t("st_hold"));setT("time-detail",t("on_hold"));setRing("ring-time","bar-time",100,"warn")}
-  else if(!m.expireMs){setT("time-num","∞");$("time-unit").textContent="";setT("time-date",t("no_expiry"));setT("time-detail","");setRing("ring-time","bar-time",100,"")}
+  if(m.hold&&!m.expireMs){setT("time-num","—");$("time-unit").textContent="";setT("time-date",t("st_hold"));setT("time-detail",t("on_hold"));setT("exp-date",t("st_hold"));setT("exp-sub",t("on_hold"));setRing("ring-time","bar-time",100,"warn")}
+  else if(!m.expireMs){setT("time-num","∞");$("time-unit").textContent="";setT("time-date",t("no_expiry"));setT("time-detail","");setT("exp-date",t("no_expiry"));setT("exp-sub","");setRing("ring-time","bar-time",100,"")}
   else{
     var useH=m.diff>0&&m.diff<864e5;
     setT("time-num",nf(useH?hrs:days,0));$("time-unit").textContent=t(useH?"hours":"days");
     setT("time-date",m.diff<=0?t("expired"):t("ends",{d:fmtDate(m.expireMs)}));
     setT("time-detail",m.diff<=0?"":t(useH?"left_hours":"left_days",{n:nf(useH?hrs:days,0)}));
+    setT("exp-date",fmtDate(m.expireMs));setT("exp-sub",m.diff<=0?t("expired"):t(useH?"left_hours":"left_days",{n:nf(useH?hrs:days,0)}));
     setRing("ring-time","bar-time",m.diff<=0?0:m.tpct,m.diff<=0?"bad":(days<=3?"bad":days<=7?"warn":""));
   }
   // account
@@ -1842,9 +1866,8 @@ function supportLink(){var u=supportRaw();
   return safeUrl(u)}
 function supportLabel(){var u=supportRaw(),m;if(/^@[A-Za-z0-9_.]{3,}$/.test(u))return u;
   m=u.match(/^(?:https?:\/\/)?(?:t|telegram)\.me\/([A-Za-z0-9_.]{3,})\/?$/i);return m?"@"+m[1]:""}
-function renderHelp(){var a=$("sup-btn"),l=supportLink(),lb=supportLabel(),id=$("sup-id");
-  $("sup-desc").textContent=t(l?"sup_desc":"sup_desc_ns");
-  if(l){a.href=l;a.style.display="inline-flex"}else{a.removeAttribute("href");a.style.display="none"}
+function openSupport(){var l=supportLink();if(l)window.open(l,"_blank","noopener,noreferrer");else openSheet("sheet-support")}
+function renderHelp(){var lb=supportLabel(),id=$("sup-id");
   id.textContent=lb;id.style.display=lb?"":"none";
   renderFaq()}
 
@@ -2010,7 +2033,8 @@ $("pf-remove").addEventListener("click",function(){try{localStorage.removeItem(L
 $("btn-theme").addEventListener("click",function(){sset(LS.theme,resolveTheme()==="dark"?"light":"dark");applyTheme()});
 $("btn-lang").addEventListener("click",function(){lang=lang==="fa"?"en":"fa";sset(LS.lang,lang);applyLang()});
 qsa(".act").forEach(function(b){b.addEventListener("click",function(){var d=b.getAttribute("data-do");
-  if(d==="copy"){if(S.ctx)copyText(S.ctx.subUrl)}else if(d==="qr"){if(S.ctx)openQr(S.ctx.subUrl,t("cfg_sub"))}else if(d==="configs")go("configs");else if(d==="support"){var l=supportLink();if(l)window.open(l,"_blank","noopener,noreferrer");else openSheet("sheet-support")}})});
+  if(d==="copy"){if(S.ctx)copyText(S.ctx.subUrl)}else if(d==="qr"){if(S.ctx)openQr(S.ctx.subUrl,t("cfg_sub"))}else if(d==="configs")go("configs");else if(d==="support")openSupport()})});
+$("sup-btn").addEventListener("click",openSupport);
 $("gate-form").addEventListener("submit",function(e){e.preventDefault();
   var v=$("gate-input").value,p=parseInput(v),ctx=p&&makeContext(location.protocol.indexOf("http")===0?location.origin:"",p);
   if(!ctx){$("gate-err").textContent=t("gate_err");return}

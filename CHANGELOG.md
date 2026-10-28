@@ -1,3 +1,9 @@
+## v1.3.1
+- Fix: page stuck on grey skeletons (a leftover reference to a removed button stopped the script)
+- The profile (avatar, name, status) now lives in the top block next to the logo; the duplicate profile card is gone
+- "Account details" is now a half-width card next to a new "Expiry date" card, like the usage rings below
+- "Support" always has a button; when no support ID is configured it opens a centered popup with the message, otherwise it opens that ID
+
 ## v1.3.0
 - Lighter: removed the animated shine, hue-cycling, drop-shadow filters and moving orbs; blur reduced to 14-18px. Weak devices (<=4 GB RAM, <=4 cores or Data Saver) automatically get "lite mode": no blur, no animations
 - Removed the "Quick connect" button (it was unreliable). The profile card is now the first block and the account details sit right below it
