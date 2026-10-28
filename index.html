@@ -2009,7 +2009,6 @@ $("pf-remove").addEventListener("click",function(){try{localStorage.removeItem(L
 /* ============ bindings ============ */
 $("btn-theme").addEventListener("click",function(){sset(LS.theme,resolveTheme()==="dark"?"light":"dark");applyTheme()});
 $("btn-lang").addEventListener("click",function(){lang=lang==="fa"?"en":"fa";sset(LS.lang,lang);applyLang()});
-$("btn-copy-sub").addEventListener("click",function(){if(S.ctx)copyText(S.ctx.subUrl)});
 qsa(".act").forEach(function(b){b.addEventListener("click",function(){var d=b.getAttribute("data-do");
   if(d==="copy"){if(S.ctx)copyText(S.ctx.subUrl)}else if(d==="qr"){if(S.ctx)openQr(S.ctx.subUrl,t("cfg_sub"))}else if(d==="configs")go("configs");else if(d==="support"){var l=supportLink();if(l)window.open(l,"_blank","noopener,noreferrer");else openSheet("sheet-support")}})});
 $("gate-form").addEventListener("submit",function(e){e.preventDefault();
