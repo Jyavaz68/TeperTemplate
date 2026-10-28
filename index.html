@@ -8,11 +8,17 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
 <meta name="generator" content="TeperTemplate">
-<script>/* performance tiers (auto): lite = weak device, fx = strong device, otherwise normal */
+<script>/* performance tiers (auto): lite = weak device, fx = strong device, otherwise normal.
+   Manual override for testing: add ?teper=fx | normal | lite to the page link (?teper=auto to reset). */
 (function(){try{var n=navigator,c=n.connection||{},h=document.documentElement,cores=n.hardwareConcurrency||0,mem=n.deviceMemory||0,
-reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
-if(c.saveData||(mem&&mem<=2)||(cores&&cores<=4))h.className+=" lite";
-else if(!reduce&&cores>=6&&(!mem||mem>=4))h.className+=" fx"}catch(e){}})()</script>
+apple=/iPhone|iPad|iPod/.test(n.userAgent)||(n.platform==="MacIntel"&&n.maxTouchPoints>1),
+reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches,force=null;
+try{var q=new URLSearchParams(location.search).get("teper");if(q==="auto")localStorage.removeItem("teper_tier");else if(q==="fx"||q==="normal"||q==="lite")localStorage.setItem("teper_tier",q);force=localStorage.getItem("teper_tier")}catch(e){}
+if(force==="lite")h.className+=" lite force";
+else if(force==="fx")h.className+=reduce?"":" fx force";
+else if(force==="normal"){}
+else if(c.saveData||(mem&&mem<=2)||(!apple&&cores&&cores<=4))h.className+=" lite";
+else if(!reduce&&(apple||(cores>=6&&(!mem||mem>=4))))h.className+=" fx"}catch(e){}})()</script>
 <title>Teper</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <style>
@@ -86,12 +92,12 @@ a{color:inherit}
 /* top bar */
 .topcard{display:flex;flex-direction:column;gap:12px;padding:14px 16px}
 .top-main{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.topcard .who{display:flex;align-items:center;gap:12px;min-width:0;flex:1 1 auto}
-.topcard .who-t{display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:0}
+.topcard .who{display:flex;align-items:center;gap:12px;min-width:0;flex:1 1 0}
+.topcard .who-t{display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:0;flex:0 1 auto;max-width:100%}
 .topcard .who-t h2{font-size:17px;max-width:100%}
 .topcard .pill{margin-bottom:0;padding:2px 10px;font-size:11.5px}
 .topcard .av,.topcard .avatar{width:50px;height:50px}
-.topcard .brand{flex:0 1 auto;min-width:0}
+.topcard .brand{flex:0 0 auto;min-width:0;max-width:46%}
 .top-tools{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:12px;border-top:1px solid var(--line)}
 .tool{display:flex;align-items:center;justify-content:center;gap:8px;height:40px;border-radius:14px;border:1px solid var(--gbd);background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.02)),var(--card-2);box-shadow:inset 0 1px 0 var(--hi2);color:var(--tx);font-size:13px;font-weight:700;transition:transform .15s,background .2s}
 .tool:hover{background:rgba(var(--a-rgb),.12)}.tool:active{transform:scale(.97)}
@@ -201,7 +207,7 @@ html.lite *,html.lite *::before,html.lite *::after{animation:none!important}
 .topcard .brand-subtitle{display:none}
 /* status is shown by the avatar dot; the text stays for screen readers only */
 .topcard .pill{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;border:0}
-.topcard .who-t h2{font-size:18px}
+.topcard .who-t h2{font-size:18px;unicode-bidi:plaintext;text-align:start}
 .exp{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
 .exp-lbl{display:flex;align-items:center;gap:6px;color:var(--tx2);font-size:12px;font-weight:700}
 .exp-lbl .i{width:15px;height:15px;color:var(--a-ink)}
@@ -382,6 +388,8 @@ html[data-custom=on] .avatar:not(.has-photo){animation:none}
 #sheet-support .btn{width:100%;margin-top:4px}
 @keyframes popIn{from{transform:scale(.9);opacity:0}}
 /* ---------- strong devices (auto "fx" tier): extra polish ---------- */
+html.fx .card{-webkit-backdrop-filter:blur(22px) saturate(1.45);backdrop-filter:blur(22px) saturate(1.45)}
+html.fx .nav{-webkit-backdrop-filter:blur(24px) saturate(1.5);backdrop-filter:blur(24px) saturate(1.5)}
 html.fx .card>*{position:relative;z-index:1}
 html.fx .card::after{content:"";position:absolute;top:-50%;left:-60%;width:60%;height:200%;pointer-events:none;z-index:0;transform:rotate(18deg);
   background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,0) 30%,rgba(255,255,255,var(--shine)) 50%,rgba(255,255,255,0) 70%,transparent 100%);animation:shinePass 9s ease-in-out infinite}

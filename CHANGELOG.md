@@ -1,3 +1,9 @@
+## v1.3.6
+- Fix: iPhone / iPad were wrongly detected as weak devices (Safari reports few CPU cores) and lost glass, shine and spinning rings. Apple devices are now treated as strong; the self-tuning guard still switches effects off if the page stutters
+- Strong devices get a richer glass look again (stronger blur and saturation on cards and the bottom bar)
+- Fix: a long username no longer pushes the logo and brand name out of the top block (the name is truncated instead)
+- Debug switch: add ?teper=fx, ?teper=normal or ?teper=lite to the page link to force a tier (?teper=auto resets)
+
 ## v1.3.5
 - Three automatic tiers: strong phones ("fx") get the subtle glass shine, avatar color cycle, animated brand gradient and glowing spinning rings; mid-range phones keep the spinning rings; weak phones ("lite") get no animation or blur
 - The "lite" check no longer flags every phone with 6 GB RAM (browsers report them as 4 GB): only <= 2 GB, <= 4 cores or Data Saver
