@@ -1,3 +1,6 @@
+## v1.3.4
+- Top block: removed the status label under the username; the avatar dot already shows it (green / yellow / red). The status text is kept for screen readers and as the dot's tooltip
+
 ## v1.3.3
 - Top block: the tagline under the brand name is hidden (more room for the username); it still shows in the page title
 - Account card: shorter English labels and "—" for empty values, so numbers are no longer cut off

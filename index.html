@@ -195,6 +195,9 @@ html.lite *,html.lite *::before,html.lite *::after{animation:none!important}
 .acc .row .v{font-size:12.5px;flex:none;max-width:60%}
 .acc .row .l{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .topcard .brand-subtitle{display:none}
+/* status is shown by the avatar dot; the text stays for screen readers only */
+.topcard .pill{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;border:0}
+.topcard .who-t h2{font-size:18px}
 .exp{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
 .exp-lbl{display:flex;align-items:center;gap:6px;color:var(--tx2);font-size:12px;font-weight:700}
 .exp-lbl .i{width:15px;height:15px;color:var(--a-ink)}
@@ -1853,7 +1856,7 @@ function renderAll(){
   setT("acc-life",fmtBytes(m.life));
   renderBanners(m);renderHelp();
 }
-function setDot(st){var d=$("avatar-dot"),u=d.querySelector("use"),id=st==="active"?"#i-check":(st==="hold"?"#i-clock":"#i-x");d.className="dot"+(st==="active"?"":(st==="hold"?" wait":" off"));u.setAttribute("href",id);u.setAttribute("xlink:href",id)}
+function setDot(st){var d=$("avatar-dot"),u=d.querySelector("use"),id=st==="active"?"#i-check":(st==="hold"?"#i-clock":"#i-x");d.className="dot"+(st==="active"?"":(st==="hold"?" wait":" off"));u.setAttribute("href",id);u.setAttribute("xlink:href",id);var tx=$("status-txt").textContent;d.title=tx;d.setAttribute("role","img");d.setAttribute("aria-label",tx)}
 function renderBanners(m){
   var h=[];
   if(m.st==="expired")h.push('<div class="banner bad">'+ic("alert")+'<span>'+esc(t("b_exp"))+'</span></div>');
