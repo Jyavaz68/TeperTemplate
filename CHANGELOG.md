@@ -1,3 +1,8 @@
+## v1.3.2
+- Top block: profile (avatar, name, status) next to the logo on one row, with the language and theme buttons below it in the same block
+- Account details and expiry date are compact again (single-line rows, no title), like the classic layout
+- Help: the support block now only has one button, "ارتباط با پشتیبانی" (no title, no extra text)
+
 ## v1.3.1
 - Fix: page stuck on grey skeletons (a leftover reference to a removed button stopped the script)
 - The profile (avatar, name, status) now lives in the top block next to the logo; the duplicate profile card is gone

@@ -80,15 +80,21 @@ a{color:inherit}
 .brand-txt small{font-size:11.5px;color:var(--tx3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* top bar */
-.topcard{display:flex;flex-direction:column;gap:0;padding:14px 16px}
-.top-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.topcard .who{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
-.topcard .who-t{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
-.topcard .pill{margin-bottom:0}
-.topcard .av,.topcard .avatar{width:52px;height:52px}
+.topcard{display:flex;flex-direction:column;gap:12px;padding:14px 16px}
+.top-main{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topcard .who{display:flex;align-items:center;gap:12px;min-width:0;flex:1 1 auto}
+.topcard .who-t{display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:0}
+.topcard .who-t h2{font-size:17px;max-width:100%}
+.topcard .pill{margin-bottom:0;padding:2px 10px;font-size:11.5px}
+.topcard .av,.topcard .avatar{width:50px;height:50px}
+.topcard .brand{flex:0 1 auto;min-width:0}
+.top-tools{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:12px;border-top:1px solid var(--line)}
+.tool{display:flex;align-items:center;justify-content:center;gap:8px;height:40px;border-radius:14px;border:1px solid var(--gbd);background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.02)),var(--card-2);box-shadow:inset 0 1px 0 var(--hi2);color:var(--tx);font-size:13px;font-weight:700;transition:transform .15s,background .2s}
+.tool:hover{background:rgba(var(--a-rgb),.12)}.tool:active{transform:scale(.97)}
+.tool .i{width:18px;height:18px;color:var(--a-ink)}
 body.no-ctx .topcard .who{display:none}
+body.no-ctx .topcard .brand{margin-inline-end:auto}
 .page-title{display:none;font-size:22px;font-weight:800}
-.top-actions{display:flex;gap:8px;flex:none}
 .iconbtn{width:42px;height:42px;border-radius:14px;border:1px solid var(--gbd);background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.02)),var(--card);box-shadow:inset 0 1px 0 var(--hi),0 6px 18px rgba(0,0,0,.12);display:grid;place-items:center;transition:background .2s,border-color .2s,transform .15s}
 .iconbtn:hover{border-color:rgba(var(--a-rgb),.45)}.iconbtn:active{transform:scale(.94)}
 .iconbtn.txt{width:auto;padding:0 13px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;white-space:nowrap}
@@ -181,15 +187,17 @@ html.lite *,html.lite *::before,html.lite *::after{animation:none!important}
 .row:last-child{border-bottom:0;padding-bottom:0}.row:first-of-type{padding-top:0}
 .row .l{display:flex;align-items:center;gap:9px;color:var(--tx2);font-size:13px}
 .row .l .i{width:17px;height:17px;color:var(--a-ink)}
-.acc .row,.exp .row{flex-direction:column;align-items:flex-start;gap:3px;padding:9px 0}
-.acc .row .l,.exp .row .l{font-size:11.5px;gap:6px}.acc .row .l .i,.exp .row .l .i{width:15px;height:15px}
-html[dir=rtl] .acc .row .v,html[dir=rtl] .exp .row .v{text-align:right}html[dir=ltr] .acc .row .v,html[dir=ltr] .exp .row .v{text-align:left}
-.acc .row .v,.exp .row .v{max-width:100%;font-size:13px}
-.exp{display:flex;flex-direction:column}
-.exp .ct{align-self:flex-start}
-.exp-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;padding:10px 0 12px}
-.exp-date{font-size:19px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.3}
-.exp-body small{font-size:12px;color:var(--tx2)}
+.acc,.exp{padding:12px 14px}
+.acc .row{gap:6px;padding:8px 0}
+.acc .row:first-child{padding-top:2px}.acc .row:last-child{padding-bottom:2px}
+.acc .row .l{font-size:11.5px;gap:6px;white-space:nowrap}
+.acc .row .l .i{width:15px;height:15px}
+.acc .row .v{font-size:12.5px;min-width:0}
+.exp{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
+.exp-lbl{display:flex;align-items:center;gap:6px;color:var(--tx2);font-size:12px;font-weight:700}
+.exp-lbl .i{width:15px;height:15px;color:var(--a-ink)}
+.exp-date{font-size:20px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.3}
+.exp small{font-size:12px;color:var(--tx2)}
 .row .v{font-weight:700;font-size:13.5px;text-align:end;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-variant-numeric:tabular-nums}
 
 /* quick actions */
@@ -330,7 +338,7 @@ html[data-theme=light] .skel{background-image:linear-gradient(90deg,var(--field)
 
 /* ---------- responsive ---------- */
 @media(max-width:360px){.actions{gap:6px}.act{font-size:11px}.ring-c b{font-size:22px}.card{padding:15px}.ring{--rs:96px}}
-@media(max-width:340px){.home>.acc,.home>.exp{grid-column:span 6}.exp-date{font-size:17px}}
+@media(max-width:340px){.home>.acc,.home>.exp{grid-column:span 6}.exp-date{font-size:17px}.brand-subtitle{display:none}}
 @media(min-width:640px){.ring{--rs:120px}}
 @media(min-width:640px){
   .shell{padding-inline:22px}
@@ -341,7 +349,7 @@ html[data-theme=light] .skel{background-image:linear-gradient(90deg,var(--field)
   .shell{grid-template-columns:268px minmax(0,1fr);gap:28px;align-items:start;padding:30px 28px 40px}
   .rail{position:sticky;top:30px;display:flex;flex-direction:column;gap:22px}
   .rail .brand{display:flex}
-  .top .brand{display:none}.page-title{display:block}
+  .top .brand{display:none}.page-title{display:block;flex:1;text-align:center}
   .nav{position:static;left:auto;right:auto;max-width:none;height:auto;flex-direction:column;gap:6px;padding:8px;border-radius:24px;box-shadow:var(--shadow);margin:0}
   .nav-btn{flex:none;flex-direction:row;justify-content:flex-start;gap:13px;padding:0 16px;height:50px;font-size:14px;border-radius:17px}
   .nav-btn:hover{color:var(--tx)}
@@ -420,6 +428,7 @@ window.TEPER_CONFIG = {
 <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></symbol>
 <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10M18 20V4M6 20v-4"/></symbol>
 <symbol id="i-db" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5M3 12a9 3 0 0 0 18 0"/></symbol>
+<symbol id="i-hourglass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></symbol>
 <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4zM22 2 11 13"/></symbol>
 <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
 <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
@@ -447,25 +456,25 @@ window.TEPER_CONFIG = {
 
   <main class="main">
     <header class="top card topcard">
-      <div class="top-row">
+      <div class="top-main">
+        <div class="who">
+          <span class="av"><button class="avatar" id="avatar" type="button" data-i18n-aria="profile_t" aria-label="Profile photo">
+            <span class="face"><svg aria-hidden="true"><use href="#i-person" xlink:href="#i-person"/></svg><img id="avatar-img" alt=""></span>
+          </button><span class="dot" id="avatar-dot"><svg class="i"><use href="#i-check" xlink:href="#i-check"/></svg></span></span>
+          <div class="who-t">
+            <h2 id="username" class="skel">........</h2>
+            <span class="pill ok" id="status-pill"><span id="status-txt" class="skel">......</span></span>
+          </div>
+        </div>
+        <h1 class="page-title" id="page-title"></h1>
         <div class="brand">
           <span class="logo"><img alt=""><svg class="shield" aria-hidden="true"><use href="#i-brand" xlink:href="#i-brand"/></svg></span>
           <span class="brand-txt"><strong class="brand-title">Teper</strong><small class="brand-subtitle"></small></span>
         </div>
-        <h1 class="page-title" id="page-title"></h1>
-        <div class="top-actions">
-          <button class="iconbtn txt" id="btn-lang" type="button" aria-label="Language"><svg class="i"><use href="#i-lang" xlink:href="#i-lang"/></svg>&nbsp;<span id="lang-lbl">EN</span></button>
-          <button class="iconbtn" id="btn-theme" type="button" aria-label="Theme"><svg class="i" id="theme-ic"><use href="#i-sun" xlink:href="#i-sun"/></svg></button>
-        </div>
       </div>
-      <div class="who">
-        <span class="av"><button class="avatar" id="avatar" type="button" data-i18n-aria="profile_t" aria-label="Profile photo">
-          <span class="face"><svg aria-hidden="true"><use href="#i-person" xlink:href="#i-person"/></svg><img id="avatar-img" alt=""></span>
-        </button><span class="dot" id="avatar-dot"><svg class="i"><use href="#i-check" xlink:href="#i-check"/></svg></span></span>
-        <div class="who-t">
-          <h2 id="username" class="skel">........</h2>
-          <span class="pill ok" id="status-pill"><span id="status-txt" class="skel">......</span></span>
-        </div>
+      <div class="top-tools">
+        <button class="tool" id="btn-lang" type="button" aria-label="Language"><svg class="i"><use href="#i-lang" xlink:href="#i-lang"/></svg><span id="lang-lbl">English</span></button>
+        <button class="tool" id="btn-theme" type="button" aria-label="Theme"><svg class="i" id="theme-ic"><use href="#i-sun" xlink:href="#i-sun"/></svg><span id="theme-lbl"></span></button>
       </div>
     </header>
 
@@ -485,16 +494,15 @@ window.TEPER_CONFIG = {
     <section class="view active" id="view-home">
       <div class="home">
         <div class="card acc">
-          <div class="ct"><svg class="i"><use href="#i-user" xlink:href="#i-user"/></svg><span data-i18n="account">مشخصات حساب</span></div>
           <div class="row"><span class="l"><svg class="i"><use href="#i-phone" xlink:href="#i-phone"/></svg><span data-i18n="devices">دستگاه مجاز</span></span><span class="v skel" id="acc-devices">--</span></div>
           <div class="row"><span class="l"><svg class="i"><use href="#i-globe" xlink:href="#i-globe"/></svg><span data-i18n="last_ip">آخرین IP</span></span><span class="v ltr skel" id="acc-ip">--</span></div>
-          <div class="row"><span class="l"><svg class="i"><use href="#i-activity" xlink:href="#i-activity"/></svg><span data-i18n="lifetime">کل مصرف</span></span><span class="v skel" id="acc-life">--</span></div>
+          <div class="row"><span class="l"><svg class="i"><use href="#i-db" xlink:href="#i-db"/></svg><span data-i18n="lifetime">کل مصرف</span></span><span class="v skel" id="acc-life">--</span></div>
         </div>
 
         <div class="card exp">
-          <div class="ct"><svg class="i"><use href="#i-cal" xlink:href="#i-cal"/></svg><span data-i18n="expiry">تاریخ انقضا</span></div>
-          <div class="exp-body"><b class="exp-date skel" id="exp-date">........</b><small class="skel" id="exp-sub" style="min-width:70px">.....</small></div>
-          <div class="row"><span class="l"><svg class="i"><use href="#i-cal" xlink:href="#i-cal"/></svg><span data-i18n="created">تاریخ ساخت</span></span><span class="v skel" id="acc-created">--</span></div>
+          <div class="exp-lbl"><svg class="i"><use href="#i-hourglass" xlink:href="#i-hourglass"/></svg><span data-i18n="expiry">تاریخ انقضا</span></div>
+          <b class="exp-date skel" id="exp-date">........</b>
+          <small class="skel" id="exp-sub" style="min-width:70px">.....</small>
         </div>
 
         <div class="card ring-card" id="card-traffic">
@@ -577,8 +585,6 @@ window.TEPER_CONFIG = {
       <div class="card" style="margin-top:14px">
         <div class="support">
           <div class="big"><svg class="i"><use href="#i-life" xlink:href="#i-life"/></svg></div>
-          <b style="font-size:17px" data-i18n="sup_title">پشتیبانی</b>
-          <p data-i18n="sup_hint"></p>
           <span class="sup-id" id="sup-id" style="display:none"></span>
           <button class="btn primary" id="sup-btn" type="button"><svg class="i"><use href="#i-send" xlink:href="#i-send"/></svg><span data-i18n="sup_btn">ارتباط با پشتیبانی</span></button>
         </div>
@@ -1548,7 +1554,7 @@ fa:{
 nav_home:"خانه",nav_configs:"کانفیگ‌ها",nav_apps:"اپ‌ها",nav_help:"راهنما",
 t_home:"داشبورد",t_configs:"کانفیگ‌ها و لینک‌ها",t_apps:"اپلیکیشن‌ها",t_help:"راهنما و پشتیبانی",
 st_active:"فعال",st_disabled:"غیرفعال",st_limited:"حجم تمام شده",st_expired:"منقضی شده",st_hold:"در انتظار اتصال",
-sup_hint:"برای پشتیبانی، رفع مشکل یا تمدید اشتراک روی دکمه‌ی زیر بزنید.",expiry:"تاریخ انقضا",hero_left:"{r} از {t} باقی‌مانده",hero_unl:"حجم نامحدود",connect:"اتصال سریع",copy_sub:"کپی لینک",
+theme_to_light:"تم روشن",theme_to_dark:"تم تیره",expiry:"تاریخ انقضا",hero_left:"{r} از {t} باقی‌مانده",hero_unl:"حجم نامحدود",connect:"اتصال سریع",copy_sub:"کپی لینک",
 traffic:"حجم باقی‌مانده",remaining:"باقی",used:"مصرف‌شده",total:"کل",unlimited:"نامحدود",used_of:"{u} / {t}",
 time:"زمان باقی‌مانده",days:"روز",hours:"ساعت",ends:"پایان: {d}",no_expiry:"بدون انقضا",expired:"منقضی شده",on_hold:"پس از اولین اتصال شروع می‌شود",left_days:"{n} روز مانده",left_hours:"{n} ساعت مانده",
 account:"مشخصات حساب",devices:"دستگاه مجاز",last_ip:"آخرین IP",lifetime:"کل مصرف",created:"تاریخ ساخت",none:"ثبت نشده",
@@ -1577,7 +1583,7 @@ en:{
 nav_home:"Home",nav_configs:"Configs",nav_apps:"Apps",nav_help:"Help",
 t_home:"Dashboard",t_configs:"Configs & links",t_apps:"Applications",t_help:"Help & support",
 st_active:"Active",st_disabled:"Disabled",st_limited:"Data used up",st_expired:"Expired",st_hold:"On hold",
-sup_hint:"Tap the button below for support, issues or renewals.",expiry:"Expiry date",hero_left:"{r} of {t} left",hero_unl:"Unlimited data",connect:"Connect",copy_sub:"Copy link",
+theme_to_light:"Light theme",theme_to_dark:"Dark theme",expiry:"Expiry date",hero_left:"{r} of {t} left",hero_unl:"Unlimited data",connect:"Connect",copy_sub:"Copy link",
 traffic:"Data remaining",remaining:"left",used:"Used",total:"Total",unlimited:"Unlimited",used_of:"{u} / {t}",
 time:"Time remaining",days:"days",hours:"hours",ends:"Ends: {d}",no_expiry:"No expiry",expired:"Expired",on_hold:"Starts on first connection",left_days:"{n} days left",left_hours:"{n} hours left",
 account:"Account",devices:"Device limit",last_ip:"Last IP",lifetime:"Lifetime usage",created:"Created",none:"Not recorded",
@@ -1686,12 +1692,13 @@ function applyBrand(){
   if(logo)link.href=logo;else{var b=!c[2]?["#38bdf8","#a78bfa","#f472b6"]:[c[0],c[1],c[0]],svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+b[0]+'"/><stop offset=".55" stop-color="'+b[1]+'"/><stop offset="1" stop-color="'+b[2]+'"/></linearGradient></defs><path d="M12 2 4.2 5.1v5.9c0 4.9 3.3 9.1 7.8 11 4.5-1.9 7.8-6.1 7.8-11V5.1z" fill="none" stroke="url(#g)" stroke-width="1.9" stroke-linejoin="round"/><path d="M12 2v20c4.5-1.9 7.8-6.1 7.8-11V5.1z" fill="url(#g)"/></svg>';link.href="data:image/svg+xml,"+encodeURIComponent(svg)}
   var cr=$("credit");cr.textContent=CFG.credit===false?"":t("credit");$("rail-foot").textContent=cr.textContent;
 }
+function themeLbl(){var e=$("theme-lbl");if(e)e.textContent=t(document.documentElement.getAttribute("data-theme")==="dark"?"theme_to_light":"theme_to_dark")}
 function applyLang(){
   var h=document.documentElement;h.lang=lang;h.dir=lang==="fa"?"rtl":"ltr";
   qsa("[data-i18n]").forEach(function(e){e.textContent=t(e.getAttribute("data-i18n"))});
   qsa("[data-i18n-ph]").forEach(function(e){e.placeholder=t(e.getAttribute("data-i18n-ph"))});
   qsa("[data-i18n-aria]").forEach(function(e){e.setAttribute("aria-label",t(e.getAttribute("data-i18n-aria")))});
-  $("lang-lbl").textContent=lang==="fa"?"EN":"فا";
+  $("lang-lbl").textContent=lang==="fa"?"English":"فارسی";themeLbl();
   applyBrand();renderStatic();renderHelp();setTitle();
   if(S.loaded){renderAll()}
   renderConfigs();renderApps();if(S.usage!==undefined)renderUsage(S.usage,S.range);
@@ -1842,7 +1849,6 @@ function renderAll(){
   setT("acc-devices",m.devices==null||Number(m.devices)<=0?t("unlimited"):nf(m.devices,0));
   setT("acc-ip",m.ip?String(m.ip):t("none"));
   setT("acc-life",fmtBytes(m.life));
-  setT("acc-created",m.createdMs?fmtDate(m.createdMs):t("none"));
   renderBanners(m);renderHelp();
 }
 function setDot(st){var d=$("avatar-dot"),u=d.querySelector("use"),id=st==="active"?"#i-check":(st==="hold"?"#i-clock":"#i-x");d.className="dot"+(st==="active"?"":(st==="hold"?" wait":" off"));u.setAttribute("href",id);u.setAttribute("xlink:href",id)}
@@ -2030,7 +2036,7 @@ $("pf-file").addEventListener("change",function(e){var f=e.target.files&&e.targe
 $("pf-remove").addEventListener("click",function(){try{localStorage.removeItem(LS.avatar)}catch(e){}setPhoto("")});
 
 /* ============ bindings ============ */
-$("btn-theme").addEventListener("click",function(){sset(LS.theme,resolveTheme()==="dark"?"light":"dark");applyTheme()});
+$("btn-theme").addEventListener("click",function(){sset(LS.theme,resolveTheme()==="dark"?"light":"dark");applyTheme();themeLbl()});
 $("btn-lang").addEventListener("click",function(){lang=lang==="fa"?"en":"fa";sset(LS.lang,lang);applyLang()});
 qsa(".act").forEach(function(b){b.addEventListener("click",function(){var d=b.getAttribute("data-do");
   if(d==="copy"){if(S.ctx)copyText(S.ctx.subUrl)}else if(d==="qr"){if(S.ctx)openQr(S.ctx.subUrl,t("cfg_sub"))}else if(d==="configs")go("configs");else if(d==="support")openSupport()})});
