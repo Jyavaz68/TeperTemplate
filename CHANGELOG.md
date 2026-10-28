@@ -1,9 +1,8 @@
-## v1.2.0
-- Fix: "Quick connect" now opens the app with the raw subscription link (e.g. `streisand://import/https://…`) instead of a percent-encoded one, which caused "invalid config" in Streisand and similar apps. The link is only URL-encoded when the app expects it as a query value (`?url={url}`)
-- New "Customize colors" sheet (palette button): 14 accent presets + two custom pickers for the button gradient, and 16 background presets (dark and light) + a custom background picker. Saved on the user's device only; text and surfaces adapt automatically to light or dark backgrounds
-- Support: if no support ID/link is configured, the Help tab tells the user to message the person they bought the config from; if one is set, the button opens that ID and the ID is shown
-- Stronger liquid-glass look: animated color orbs behind the page, thicker blur, gradient glass borders, glossy buttons, glass sheets and dock
-- Installer: numbered color menus in the terminal for the button/accent color (14 presets + custom hex) and the page background (15 presets + custom hex); new `--bg` flag. The admin's choice is the default; users can still change it from the palette button
+## v1.3.0
+- Lighter: removed the animated shine, hue-cycling, drop-shadow filters and moving orbs; blur reduced to 14-18px. Weak devices (<=4 GB RAM, <=4 cores or Data Saver) automatically get "lite mode": no blur, no animations
+- Removed the "Quick connect" button (it was unreliable). The profile card is now the first block and the account details sit right below it
+- "Support": if no support ID/link is configured the button opens a popup ("message the person you got this service from"); if one is set it opens that ID. In the Help tab the support block is now the last one
+- Removed the user-side color picker. Colors are chosen by the admin in the installer: button color (14 presets or #hex) plus a separate background for the dark theme and for the light theme (presets or #hex). New flags `--bg-dark` and `--bg-light`
 
 ## v1.1.0
 - Default logo is now the shield icon with an animated gradient brand name (used when no logo URL is set)
