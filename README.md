@@ -93,14 +93,22 @@ sudo bash install.sh install --yes \
 
 ## 🎨 شخصی‌سازی بیشتر
 
-بعد از نصب، بالای فایل `index.html` یک بلوک `window.TEPER_CONFIG` هست که می‌توانید مستقیم ویرایشش کنید (یا با `teper` ← **Change branding** از طریق نصب‌کننده).
+تنظیمات برند در فایل `/var/lib/pasarguard/templates/subscription/.teper.json` (بخش `config`) ذخیره می‌شود. بعد از هر تغییر در آن، این دستور را بزنید تا روی قالب اعمال شود:
 
-- **مخفی کردن نوشته‌ی «ساخته‌شده با TeperTemplate»:** مقدار `"credit": false`
+```bash
+teper brand --yes
+```
+
+گزینه‌های اضافه که در بخش `config` اضافه می‌کنید:
+
+- **مخفی کردن نوشته‌ی «ساخته‌شده با TeperTemplate»:** `"credit": false`
 - **عوض کردن اپ پیشنهادی هر سیستم‌عامل:**
 
-```js
+```json
 "recommended": { "android": { "name": "Hiddify", "url": "https://…", "store": "GitHub" } }
 ```
+
+> ⚠️ اگر مستقیم داخل `index.html` ویرایش کنید، با اولین `teper update` یا `teper brand` پاک می‌شود. همیشه از فایل `.teper.json` استفاده کنید.
 
 ## 🗑 حذف
 

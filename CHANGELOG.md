@@ -1,3 +1,8 @@
+## v1.3.5
+- Three automatic tiers: strong phones ("fx") get the subtle glass shine, avatar color cycle, animated brand gradient and glowing spinning rings; mid-range phones keep the spinning rings; weak phones ("lite") get no animation or blur
+- The "lite" check no longer flags every phone with 6 GB RAM (browsers report them as 4 GB): only <= 2 GB, <= 4 cores or Data Saver
+- Self-tuning: if the page stutters during the first seconds, effects are switched off automatically
+
 ## v1.3.4
 - Top block: removed the status label under the username; the avatar dot already shows it (green / yellow / red). The status text is kept for screen readers and as the dot's tooltip
 

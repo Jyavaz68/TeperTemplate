@@ -8,7 +8,11 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
 <meta name="generator" content="TeperTemplate">
-<script>(function(){try{var n=navigator,c=n.connection||{};if((n.deviceMemory&&n.deviceMemory<=4)||(n.hardwareConcurrency&&n.hardwareConcurrency<=4)||c.saveData)document.documentElement.className+=" lite"}catch(e){}})()</script>
+<script>/* performance tiers (auto): lite = weak device, fx = strong device, otherwise normal */
+(function(){try{var n=navigator,c=n.connection||{},h=document.documentElement,cores=n.hardwareConcurrency||0,mem=n.deviceMemory||0,
+reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+if(c.saveData||(mem&&mem<=2)||(cores&&cores<=4))h.className+=" lite";
+else if(!reduce&&cores>=6&&(!mem||mem>=4))h.className+=" fx"}catch(e){}})()</script>
 <title>Teper</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <style>
@@ -377,6 +381,21 @@ html[data-custom=on] .avatar:not(.has-photo){animation:none}
 #sheet-support .support p{font-size:14.5px;line-height:1.95;color:var(--tx);max-width:none}
 #sheet-support .btn{width:100%;margin-top:4px}
 @keyframes popIn{from{transform:scale(.9);opacity:0}}
+/* ---------- strong devices (auto "fx" tier): extra polish ---------- */
+html.fx .card>*{position:relative;z-index:1}
+html.fx .card::after{content:"";position:absolute;top:-50%;left:-60%;width:60%;height:200%;pointer-events:none;z-index:0;transform:rotate(18deg);
+  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,0) 30%,rgba(255,255,255,var(--shine)) 50%,rgba(255,255,255,0) 70%,transparent 100%);animation:shinePass 9s ease-in-out infinite}
+html.fx .card:nth-of-type(2n)::after{animation-delay:-3s}
+html.fx .card:nth-of-type(3n)::after{animation-delay:-5.5s}
+html.fx .card:nth-of-type(5n)::after{animation-delay:-7.2s}
+@keyframes shinePass{0%{left:-60%;opacity:0}15%{opacity:.9}50%{left:120%;opacity:.9}51%{opacity:0}100%{left:-60%;opacity:0}}
+html.fx:not([data-custom=on]) .avatar:not(.has-photo){animation:avatarHue 10s linear infinite}
+@keyframes avatarHue{to{filter:hue-rotate(360deg)}}
+html.fx .brand-txt strong{animation:brandMove 4s ease-in-out infinite}
+@keyframes brandMove{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+html.fx .ring svg{filter:drop-shadow(0 4px 12px rgba(0,0,0,.15))}
+html.fx .ring .sp1{filter:drop-shadow(0 0 6px rgba(var(--a2-rgb),.38))}
+html.fx .ring .sp2{filter:drop-shadow(0 0 6px rgba(var(--a-rgb),.3))}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 </style>
@@ -2077,6 +2096,22 @@ function init(){
   document.body.classList.add("no-ctx");
 }
 init();
+
+/* self-tuning: if the page stutters, drop fx, then drop to lite */
+(function(){
+  var h=document.documentElement;if(h.classList.contains("lite"))return;
+  function sample(done){var last=0,n=0,slow=0,start=0;
+    function f(ts){if(document.hidden){last=0;return requestAnimationFrame(f)}
+      if(!start)start=ts;
+      if(last){var d=ts-last;if(d<500){n++;if(d>38)slow++}}
+      last=ts;
+      if(ts-start<2500)requestAnimationFrame(f);else done(n>20&&slow/n>0.3)}
+    requestAnimationFrame(f)}
+  setTimeout(function(){sample(function(bad){
+    if(!bad)return;
+    if(h.classList.contains("fx")){h.classList.remove("fx");setTimeout(function(){sample(function(bad2){if(bad2)h.classList.add("lite")})},800)}
+    else h.classList.add("lite")})},2000);
+})();
 })();
 </script>
 </body>
